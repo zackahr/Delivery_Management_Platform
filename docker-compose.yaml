@@ -21,5 +21,16 @@ services:
     depends_on:
       - mongodb
 
+  nest-mongodb:
+    build:
+      context: ./nest-mongodb
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nest-mongodb:/app
+    depends_on:
+      - mongodb
+
 volumes:
   mongodb_data:

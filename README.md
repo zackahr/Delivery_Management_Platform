@@ -1,7 +1,6 @@
 # Dockerize-MongoDB-NestJs
-Docker MongoDb with NestJs
 
-This repository contains a Docker Compose setup for running MongoDB , Mongo Express containers and NestJs App, providing a convenient way to manage MongoDB databases and interact with them using a web-based administrative interface.
+This repository contains a Docker Compose setup for running MongoDB, Mongo Express, and Nest.js App, providing a convenient way to manage MongoDB databases and interact with them using a web-based administrative interface.
 
 ## MongoDB Service
 
@@ -16,17 +15,25 @@ This repository contains a Docker Compose setup for running MongoDB , Mongo Expr
 - **Container Name**: The container running Mongo Express is named `mongo-express`.
 - **Ports**: Mongo Express is accessible on port `8081` of the host machine.
 - **Environment Variables**: Mongo Express is configured to connect to the MongoDB service (`mongodb`) using environment variables. Basic authentication is enabled with the username `admin` and password `password`.
-- **Depends On**: Mongo Express depends on the MongoDB service (`mongodb`), ensuring that MongoDB is started before Mongo Express.n 
+- **Depends On**: Mongo Express depends on the MongoDB service (`mongodb`), ensuring that MongoDB is started before Mongo Express.
 
-## MongoDB and Mongo Express
+## Nest.js Service
 
-- **Port Usage**: MongoDB uses port `27017`, which is the default port for MongoDB connections. Mongo Express uses port `8081` to provide a web-based interface for managing MongoDB databases.
-- **Purpose**: MongoDB is a NoSQL database that stores data in a flexible, JSON-like format. It is widely used for various types of applications, including web and mobile applications. Mongo Express is a lightweight administrative interface for MongoDB, allowing users to perform CRUD operations, view database statistics, and manage database users through a web browser.
+- **Dockerfile**: The Nest.js application is containerized using a Dockerfile located in the `nest-mongodb` directory.
+- **Container Name**: The container running the Nest.js application is named `nest-mongodb`.
+- **Ports**: The Nest.js application is accessible on port `3000` of the host machine.
+- **Volumes**: The Nest.js application code is mounted from the `./nest-mongodb` directory to the `/app` directory inside the container.
+- **Depends On**: The Nest.js application depends on the MongoDB service (`mongodb`).
 
-## Accessing MongoDB and Mongo Express
+## MongoDB, Mongo Express, and Nest.js
 
-- After starting the Docker containers using `docker-compose up`, MongoDB can be accessed using any MongoDB client that supports connection to `localhost:27017`. Mongo Express can be accessed by navigating to `http://localhost:8081` in a web browser. Use the username `admin` and password `password` to log in to Mongo Express.
+- **Port Usage**: MongoDB uses port `27017`, which is the default port for MongoDB connections. Mongo Express uses port `8081` to provide a web-based interface for managing MongoDB databases. The Nest.js application uses port `3000`.
+- **Purpose**: MongoDB is a NoSQL database that stores data in a flexible, JSON-like format. It is widely used for various types of applications, including web and mobile applications. Mongo Express is a lightweight administrative interface for MongoDB, allowing users to perform CRUD operations, view database statistics, and manage database users through a web browser. Nest.js is a framework for building efficient, scalable Node.js server-side applications.
+
+## Accessing MongoDB, Mongo Express, and Nest.js
+
+- After starting the Docker containers using `docker-compose up`, MongoDB can be accessed using any MongoDB client that supports connection to `localhost:27017`. Mongo Express can be accessed by navigating to `http://localhost:8081` in a web browser. Use the username `admin` and password `password` to log in to Mongo Express. The Nest.js application will be accessible at `http://localhost:3000`.
 
 ## Note
-- Ensure that no other application is already using ports `27017` and `8081` on your host machine to avoid conflicts when running the containers.
 
+- Ensure that no other application is already using ports `27017`, `8081`, and `3000` on your host machine to avoid conflicts when running the containers.

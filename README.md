@@ -46,6 +46,15 @@ These endpoints allow you to perform basic CRUD operations on the MongoDB databa
 
 - After starting the Docker containers using `docker-compose up`, MongoDB can be accessed using any MongoDB client that supports connection to `localhost:27017`. Mongo Express can be accessed by navigating to `http://localhost:8081` in a web browser. Use the username `admin` and password `password` to log in to Mongo Express. The Nest.js application endpoints can be accessed at `http://localhost:3000/items`.
 
+## Makefile
+
+This repository includes a Makefile with the following targets:
+
+- **up**: Starts the Docker containers.
+- **down**: Stops the Docker containers.
+- **restart**: Restarts the Docker containers.
+- **logs**: Fetches logs from the Docker containers.
+
 ## Note
 
 - Ensure that no other application is already using ports `27017`, `8081`, and `3000` on your host machine to avoid conflicts when running the containers.

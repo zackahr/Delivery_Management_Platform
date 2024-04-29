@@ -16,7 +16,7 @@ This repository contains a Docker Compose setup for running MongoDB , Mongo Expr
 - **Container Name**: The container running Mongo Express is named `mongo-express`.
 - **Ports**: Mongo Express is accessible on port `8081` of the host machine.
 - **Environment Variables**: Mongo Express is configured to connect to the MongoDB service (`mongodb`) using environment variables. Basic authentication is enabled with the username `admin` and password `password`.
-- **Depends On**: Mongo Express depends on the MongoDB service (`mongodb`), ensuring that MongoDB is started before Mongo Express.
+- **Depends On**: Mongo Express depends on the MongoDB service (`mongodb`), ensuring that MongoDB is started before Mongo Express.n 
 
 ## MongoDB and Mongo Express
 

@@ -8,7 +8,7 @@ all: up
 
 up:
 	@echo "Starting containers..."
-	$(DOCKER_COMPOSE) up -d
+	$(DOCKER_COMPOSE) up 
 
 down:
 	@echo "Stopping containers..."

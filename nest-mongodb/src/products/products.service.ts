@@ -27,6 +27,14 @@ export class ProductsService {
         return product;
     }
     
+    async findByName(productName: string) {
+        const product = await this.productModel.findOne({ name: productName }).exec();
+        if (!product) {
+            throw new NotFoundException('Product not found');
+        }
+        return product;
+    }
+
     async updateProduct(id: string, updateProductDto: CreateProductDto) {
         const updatedProduct = await this.productModel.findByIdAndUpdate(id, updateProductDto, { new: true });
         if (!updatedProduct) {
@@ -41,9 +49,5 @@ export class ProductsService {
             throw new NotFoundException('Product not found');
         }
         return deletedProduct;
-    }
-    async findByName(name: string): Promise<Product | null> {
-        const product = await this.productModel.findOne({ name }).exec();
-        return product;
     }
 }

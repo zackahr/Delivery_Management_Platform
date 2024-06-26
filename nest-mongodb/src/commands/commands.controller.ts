@@ -35,4 +35,9 @@ export class CommandsController {
     async remove(@Param('id') id: string) {
         return this.commandsService.removeCommand(id);
     }
+    
+    @Get('client/:clientName')
+    async findByClientName(@Param('clientName') clientName: string) {
+        return this.commandsService.findCommandsByClientName(clientName);
+    }
 }

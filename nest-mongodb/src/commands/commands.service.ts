@@ -21,8 +21,6 @@ export class CommandsService {
         const product = await this.productsService.findByName(productName);
         if (!product) {
             throw new NotFoundException('Product not found');
-            // Alternatively, you can return a custom error response or handle it differently
-            // throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
         }
 
         // Fetch client by name
@@ -45,15 +43,24 @@ export class CommandsService {
     }
 
     async findAll() {
-        return this.commandModel.find().exec();
+        return this.commandModel.find().populate('client', 'name').populate('product', 'name').exec();
     }
 
     async findOne(id: string) {
-        const command = await this.commandModel.findById(id).exec();
+        const command = await this.commandModel.findById(id).populate('client', 'name').populate('product', 'name').exec();
         if (!command) {
             throw new NotFoundException('Command not found');
         }
         return command;
+    }
+
+    async findCommandsByClientName(clientName: string) {
+        const client = await this.clientModel.findOne({ name: clientName }).exec();
+        if (!client) {
+            throw new NotFoundException('Client not found');
+        }
+
+        return this.commandModel.find({ client: client._id }).populate('client', 'name').populate('product', 'name').exec();
     }
 
     async updateCommand(id: string, updateCommandDto: CreateCommandDto) {

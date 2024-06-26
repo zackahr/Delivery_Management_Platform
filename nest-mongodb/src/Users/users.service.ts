@@ -30,10 +30,10 @@ export class usersService{
         return this.userModel.findByIdAndDelete(id);
     }
 
-    async register(createUserDto: CreateUserDto) {
-        const newUser = new this.userModel(createUserDto);
-        return await newUser.save();
-    }
+    // async register(createUserDto: CreateUserDto) {
+    //     const newUser = new this.userModel(createUserDto);
+    //     return await newUser.save();
+    // }
 
     async findByCredentials(username: string, password: string): Promise<User | null> {
         const user = await this.userModel.findOne({ username });

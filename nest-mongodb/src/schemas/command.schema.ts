@@ -1,17 +1,15 @@
-// src/schemas/command.schema.ts
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
-import { Client } from './client.schema'; // Import Client schema
+import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Client } from './client.schema';
 import { Product } from './product.schema';
 
 @Schema()
 export class Command extends Document {
-    @Prop({ type: Types.ObjectId, ref: 'Client' }) // Reference to Client schema
-    clientId: Client['_id'];
+    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Client', required: true })
+    client: Client;
 
-    @Prop({ type: Types.ObjectId, ref: 'Product' }) // Reference to Product schema
-    productId: Product['_id'];
+    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Product', required: true })
+    product: Product;
 
     @Prop({ required: true })
     quantity: number;

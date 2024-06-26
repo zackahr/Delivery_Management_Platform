@@ -15,18 +15,19 @@ export class UsersController {
     //     return this.usersService.createUser(createUserDto);
     // }
 
-    @Post('login')
-    @UsePipes(new ValidationPipe())
-    async login(@Body() loginUserDto: LoginUserDto) {
-        const user = await this.usersService.findByCredentials(loginUserDto.username, loginUserDto.password);
 
-        if (!user) {
-            throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
-        }
+    // @Post('login')
+    // @UsePipes(new ValidationPipe())
+    // async login(@Body() loginUserDto: LoginUserDto) {
+    //     const user = await this.usersService.findByCredentials(loginUserDto.username, loginUserDto.password);
 
-        // Here you can optionally return a token or user data as needed
-        return { username: user.username };
-    }
+    //     if (!user) {
+    //         throw new HttpException('Username or Password is Incorrect', HttpStatus.UNAUTHORIZED);
+    //     }
+
+    //     // Here you can optionally return a token or user data as needed
+    //     return { username: user.username };
+    // }
 
     @Get()
     async getUsers() {    
@@ -62,10 +63,10 @@ export class UsersController {
         return this.usersService.deleteUser(id);
     }
 
-    @Post('register')
-    @UsePipes(new ValidationPipe())
-    async register(@Body() createUserDto: CreateUserDto) {
-        const createdUser = await this.usersService.register(createUserDto);
-        return { username: createdUser.username };
-    }
+    // @Post('register')
+    // @UsePipes(new ValidationPipe())
+    // async register(@Body() createUserDto: CreateUserDto) {
+    //     const createdUser = await this.usersService.register(createUserDto);
+    //     return { username: createdUser.username };
+    // }
 }

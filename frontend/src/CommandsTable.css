@@ -1,0 +1,22 @@
+/* CommandsTable.css */
+
+.commands-table-container {
+    margin-top: 1rem;
+}
+
+.commands-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+.commands-table th,
+.commands-table td {
+    padding: 0.5rem;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+.commands-table th {
+    background-color: #f8f9fa;
+}

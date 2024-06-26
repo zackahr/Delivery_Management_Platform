@@ -1,5 +1,3 @@
-// src/clients/clients.service.ts
-
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -15,11 +13,11 @@ export class ClientsService {
         return newClient.save();
     }
 
-    async findAll() {
+    async findAll(): Promise<Client[]> {
         return this.clientModel.find().exec();
     }
 
-    async findOne(id: string) {
+    async findOne(id: string): Promise<Client> {
         const client = await this.clientModel.findById(id).exec();
         if (!client) {
             throw new NotFoundException('Client not found');
@@ -27,7 +25,11 @@ export class ClientsService {
         return client;
     }
 
-    async updateClient(id: string, updateClientDto: CreateClientDto) {
+    async findByAddress(address: string) {
+        return this.clientModel.find({ address }).exec();
+    }
+    
+    async updateClient(id: string, updateClientDto: CreateClientDto): Promise<Client> {
         const updatedClient = await this.clientModel.findByIdAndUpdate(id, updateClientDto, { new: true });
         if (!updatedClient) {
             throw new NotFoundException('Client not found');
@@ -35,11 +37,7 @@ export class ClientsService {
         return updatedClient;
     }
     
-    async findByName(name: string) {
-        return this.clientModel.findOne({ name }).exec();
-    }
-
-    async removeClient(id: string) {
+    async removeClient(id: string): Promise<Client> {
         const deletedClient = await this.clientModel.findByIdAndDelete(id);
         if (!deletedClient) {
             throw new NotFoundException('Client not found');

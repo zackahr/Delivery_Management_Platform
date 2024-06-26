@@ -3,18 +3,14 @@
 /* Ensure body and HTML take up full viewport height */
 body, html {
   height: 100%;
-  margin: 0; /* Remove default margin */
+  margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center; /* Center contents horizontally */
-  align-items: center; /* Center contents vertically */
-  background: #000;
 }
 
 /* Full height and width container */
 .father {
-  height: 100%;
-  width: 100%;
+  height: 100vh; /* Use viewport height for full height */
+  width: 100vw; /* Use viewport width for full width */
   display: flex;
   justify-content: center; /* Center contents horizontally */
   align-items: center; /* Center contents vertically */
@@ -22,7 +18,6 @@ body, html {
 
 /* Login container styling */
 .login-container {
-  /* border: 1px solid red; */
   width: 40vw;
   height: 30vw;
   position: relative;
@@ -73,10 +68,6 @@ button:hover {
 
 /* Media query for smaller devices */
 @media screen and (max-width: 768px) {
-  .father {
-    flex-direction: column;
-  }
-
   .login-container {
     width: 90%;
     padding: 10vw; /* Adjust padding for smaller screens */

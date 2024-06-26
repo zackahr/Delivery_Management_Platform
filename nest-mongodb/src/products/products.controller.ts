@@ -26,8 +26,14 @@ export class ProductsController {
 
     @Patch(':id')
     @UsePipes(new ValidationPipe())
-    async update(@Param('id') id: string, @Body() updateProductDto: CreateProductDto) {
+    async updateById(@Param('id') id: string, @Body() updateProductDto: CreateProductDto) {
         return this.productsService.updateProduct(id, updateProductDto);
+    }
+
+    @Patch('name/:productName')
+    @UsePipes(new ValidationPipe())
+    async updateByName(@Param('productName') productName: string, @Body() updateProductDto: CreateProductDto) {
+        return this.productsService.updateProductByName(productName, updateProductDto);
     }
 
     @Delete(':id')
@@ -39,5 +45,4 @@ export class ProductsController {
     async findByName(@Param('productName') productName: string) {
         return this.productsService.findByName(productName);
     }
-    
 }

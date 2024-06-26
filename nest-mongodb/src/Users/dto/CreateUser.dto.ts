@@ -1,11 +1,17 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+// CreateUser.dto.ts
+import { IsString, IsNotEmpty, IsIn } from 'class-validator';
 
 export class CreateUserDto {
-    @IsNotEmpty()
     @IsString()
+    @IsNotEmpty()
     username: string;
 
-    @IsNotEmpty()
     @IsString()
+    @IsNotEmpty()
     password: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @IsIn(['admin', 'delivery'])
+    role: string;
 }

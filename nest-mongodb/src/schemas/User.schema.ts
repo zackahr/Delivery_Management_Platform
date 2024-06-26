@@ -8,6 +8,9 @@ export class User {
 
     @Prop({ required: true })
     password: string; // This will store the hashed password
+
+    @Prop({ required: true, enum: ['admin', 'delivery'], default: 'delivery' })
+    role: string; // Role of the user, defaults to 'delivery'
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
@@ -15,7 +18,7 @@ export const UserSchema = SchemaFactory.createForClass(User);
 // Add pre-save hook to hash password before saving
 UserSchema.pre('save', async function(next) {
     const user = this as any; // Cast `this` to `any` type to access properties directly
-    if (!user.isNew || !user.isModified('password')) { // Check if it's a new user or if password is modified
+    if (!user.isModified('password')) { // Check if password is modified
         return next();
     }
 
@@ -28,4 +31,3 @@ UserSchema.pre('save', async function(next) {
         return next(error);
     }
 });
-

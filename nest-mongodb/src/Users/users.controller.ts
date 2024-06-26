@@ -1,33 +1,26 @@
 import { Controller, Post, Body, Get, Patch, Param, Delete, UsePipes, ValidationPipe, HttpException, HttpStatus } from "@nestjs/common";
-import { CreateUserDto } from "./dto/CreateUser.dto";
 import { usersService } from "./users.service";
 import mongoose from "mongoose";
 import { UpdateUserDto } from "./dto/UpdateUser.dto";
 import { LoginUserDto } from "./dto/LoginUserDto";
+import { CreateUserDto } from "./dto/CreateUser.dto";
 
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: usersService) {}
 
-    // @Post()
-    // @UsePipes(new ValidationPipe())
-    // async create(@Body() createUserDto: CreateUserDto) {
-    //     return this.usersService.createUser(createUserDto);
-    // }
+    @Post('login')
+    async login(@Body() loginUserDto: LoginUserDto) {
+        const user = await this.usersService.findByCredentials(loginUserDto.username, loginUserDto.password);
 
+        if (!user) {
+            throw new HttpException('Username or Password is Incorrect', HttpStatus.UNAUTHORIZED);
+        }
 
-    // @Post('login')
-    // @UsePipes(new ValidationPipe())
-    // async login(@Body() loginUserDto: LoginUserDto) {
-    //     const user = await this.usersService.findByCredentials(loginUserDto.username, loginUserDto.password);
-
-    //     if (!user) {
-    //         throw new HttpException('Username or Password is Incorrect', HttpStatus.UNAUTHORIZED);
-    //     }
-
-    //     // Here you can optionally return a token or user data as needed
-    //     return { username: user.username };
-    // }
+        // Assuming user has a `role` property
+        const { username, role } = user;
+        return { username, role };
+    }
 
     @Get()
     async getUsers() {    
@@ -63,10 +56,10 @@ export class UsersController {
         return this.usersService.deleteUser(id);
     }
 
-    // @Post('register')
-    // @UsePipes(new ValidationPipe())
-    // async register(@Body() createUserDto: CreateUserDto) {
-    //     const createdUser = await this.usersService.register(createUserDto);
-    //     return { username: createdUser.username };
-    // }
+    @Post('register')
+    @UsePipes(new ValidationPipe())
+    async register(@Body() createUserDto: CreateUserDto) {
+        const createdUser = await this.usersService.register(createUserDto);
+        return { username: createdUser.username };
+    }
 }

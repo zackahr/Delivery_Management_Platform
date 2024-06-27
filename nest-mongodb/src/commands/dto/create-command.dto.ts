@@ -1,15 +1,19 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsNotEmpty, IsOptional } from 'class-validator';
 
 export class CreateCommandDto {
-    @IsNotEmpty()
-    @IsString()
-    clientName: string;
+  @IsString()
+  @IsNotEmpty()
+  clientName: string;
 
-    @IsNotEmpty()
-    @IsString()
-    productName: string;
+  @IsString()
+  @IsNotEmpty()
+  productName: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    quantity: number;
+  @IsNumber()
+  @IsNotEmpty()
+  quantity: number;
+
+  @IsNumber()
+  @IsOptional()
+  totalPrice?: number;
 }

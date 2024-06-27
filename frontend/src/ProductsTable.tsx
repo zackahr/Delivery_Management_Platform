@@ -1,8 +1,7 @@
-// ProductsTable.tsx
-
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import './ProductsTable.css'; // Import corresponding CSS file if exists
+import './ProductsTable.css';
+import ConfirmationDialog from './ConfirmationDialog'; // Import the confirmation dialog component
 
 interface Product {
   _id: string;
@@ -12,41 +11,65 @@ interface Product {
 
 interface ProductsTableProps {
   products: Product[];
-  onUpdateProduct: (productId: string, newName: string, newPrice: number) => void;
-  onDeleteProduct: (productId: string) => void;
 }
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ products, onUpdateProduct, onDeleteProduct }) => {
-  const handleUpdateProduct = async (productId: string) => {
-    // Example: Updating a product (patch method)
-    const updatedName = prompt('Enter updated name:');
-    const updatedPrice = parseFloat(prompt('Enter updated price:')) || 0;
+const ProductsTable: React.FC<ProductsTableProps> = ({ products: initialProducts }) => {
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [editProductId, setEditProductId] = useState<string | null>(null);
+  const [editProductName, setEditProductName] = useState<string>('');
+  const [editProductPrice, setEditProductPrice] = useState<number>(0);
+  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
-    if (updatedName !== null && updatedPrice !== null) {
+  const handleEditClick = (product: Product) => {
+    setEditProductId(product._id);
+    setEditProductName(product.name);
+    setEditProductPrice(product.price);
+  };
+
+  const handleCancelClick = () => {
+    setEditProductId(null);
+  };
+
+  const handleUpdateClick = async (id: string) => {
+    try {
+      const response = await axios.patch(`http://localhost:3000/products/${id}`, {
+        name: editProductName,
+        price: editProductPrice,
+      });
+
+      // Update the product in the local state
+      const updatedProduct = response.data;
+      setProducts(products.map(product => product._id === id ? updatedProduct : product));
+      setEditProductId(null);
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  };
+
+  const handleDeleteClick = (id: string) => {
+    setShowConfirmation(true);
+    setProductToDelete(id);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (productToDelete) {
       try {
-        await axios.patch(`http://localhost:3000/products/${productId}`, {
-          name: updatedName,
-          price: updatedPrice,
-        });
-        onUpdateProduct(productId, updatedName, updatedPrice);
+        await axios.delete(`http://localhost:3000/products/${productToDelete}`);
+        // Update the local state by removing the deleted product
+        setProducts(products.filter(product => product._id !== productToDelete));
       } catch (error) {
-        console.error('Error updating product:', error);
-        // Handle error (e.g., show error message)
+        console.error('Error deleting product:', error);
+      } finally {
+        setShowConfirmation(false);
+        setProductToDelete(null);
       }
     }
   };
 
-  const handleDeleteProduct = async (productId: string) => {
-    // Example: Deleting a product (delete method)
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      try {
-        await axios.delete(`http://localhost:3000/products/${productId}`);
-        onDeleteProduct(productId);
-      } catch (error) {
-        console.error('Error deleting product:', error);
-        // Handle error (e.g., show error message)
-      }
-    }
+  const handleCancelDelete = () => {
+    setShowConfirmation(false);
+    setProductToDelete(null);
   };
 
   return (
@@ -57,23 +80,59 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ products, onUpdateProduct
           <tr>
             <th>Name</th>
             <th>Price</th>
-            <th>Actions</th> {/* New column for actions */}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
             <tr key={product._id}>
-              <td>{product.name}</td>
-              <td>${product.price.toFixed(2)}</td>
               <td>
-                {/* Update and Delete buttons */}
-                <button onClick={() => handleUpdateProduct(product._id)}>Update</button>
-                <button onClick={() => handleDeleteProduct(product._id)}>Delete</button>
+                {editProductId === product._id ? (
+                  <input
+                    type="text"
+                    value={editProductName}
+                    onChange={(e) => setEditProductName(e.target.value)}
+                  />
+                ) : (
+                  product.name
+                )}
+              </td>
+              <td>
+                {editProductId === product._id ? (
+                  <input
+                    type="number"
+                    value={editProductPrice}
+                    onChange={(e) => setEditProductPrice(Number(e.target.value))}
+                  />
+                ) : (
+                  `$${product.price.toFixed(2)}`
+                )}
+              </td>
+              <td>
+                {editProductId === product._id ? (
+                  <>
+                    <button onClick={() => handleUpdateClick(product._id)}>Save</button>
+                    <button onClick={handleCancelClick}>Cancel</button>
+                  </>
+                ) : (
+                  <>
+                    <button onClick={() => handleEditClick(product)}>Update</button>
+                    <button onClick={() => handleDeleteClick(product._id)}>Delete</button>
+                  </>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {showConfirmation && (
+        <ConfirmationDialog
+          message="Are you sure you want to delete this product?"
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </div>
   );
 };

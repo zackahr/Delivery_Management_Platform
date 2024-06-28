@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios'; // Import AxiosError for type checking
 import './AddClient.css'; // Import CSS
 
 interface AddClientProps {
@@ -24,8 +24,13 @@ const AddClient: React.FC<AddClientProps> = ({ setError, setShowAddClient }) => 
       setShowAddClient(false); // Hide AddClient component after success
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Error adding client:', error.response?.data || error.message);
-        setError('Failed to add client. Please try again.');
+        const axiosError = error as AxiosError;
+        if (axiosError.response?.status === 409) {
+          setError('Client with this name already exists.');
+        } else {
+          console.error('Error adding client:', axiosError.response?.data || axiosError.message);
+          setError('Failed to add client. Please try again.');
+        }
       } else {
         console.error('Error:', error);
         setError('An unexpected error occurred.');

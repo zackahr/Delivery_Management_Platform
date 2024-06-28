@@ -1,16 +1,23 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, UsePipes, ValidationPipe, Query } from '@nestjs/common';
+import { Controller, Get, ConflictException, NotFoundException, Post, Body, Param, Patch, Delete, UsePipes, ValidationPipe, Query } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { Client } from '../schemas/client.schema';
 
 @Controller('clients')
 export class ClientsController {
-    constructor(private readonly clientsService: ClientsService) {}
+    constructor(private readonly clientsService: ClientsService) { }
 
     @Post()
     @UsePipes(new ValidationPipe())
     async create(@Body() createClientDto: CreateClientDto): Promise<Client> {
-        return this.clientsService.createClient(createClientDto);
+        try {
+            return await this.clientsService.createClient(createClientDto);
+        } catch (error) {
+            if (error instanceof ConflictException) {
+                throw new ConflictException(error.message);
+            }
+            throw error;
+        }
     }
 
     @Get()
@@ -37,5 +44,17 @@ export class ClientsController {
     @Delete(':id')
     async remove(@Param('id') id: string): Promise<Client> {
         return this.clientsService.removeClient(id);
+    }
+    @Get(':username')
+    async getClientByUsername(@Param('username') username: string): Promise<Client> {
+        try {
+            const client = await this.clientsService.findByUsername(username);
+            return client;
+        } catch (error) {
+            if (error instanceof NotFoundException) {
+                throw new NotFoundException(error.message);
+            }
+            throw error;
+        }
     }
 }

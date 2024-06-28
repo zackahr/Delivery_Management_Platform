@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Dashboard.css';
-import AddCommand from './AddCommand';
-import AddClient from './AddClient';
-import ClientsTable from './ClientsTable';
-import CommandsTable from './CommandsTable';
-import ProductsTable from './ProductsTable';
-import AddProduct from './AddProduct';
+import AddCommand from '../AddCommand/AddCommand';
+import AddClient from '../AddClient/AddClient';
+import ClientsTable from '../ClientsTable/ClientsTable';
+import CommandsTable from '../CommandsTable/CommandsTable';
+import ProductsTable from '../ProductsTable/ProductsTable';
+import AddProduct from '../AddProduct/AddProduct';
 
 interface Client {
+  _id: string;
   name: string;
   address: string;
   phoneNumber: string;
@@ -130,33 +131,30 @@ const Dashboard: React.FC = () => {
         clientName: updatedCommand.client?.name,
         productName: updatedCommand.product?.name,
         quantity: updatedCommand.quantity,
-        // totalPrice will be calculated on the server-side
       };
-  
+
       const response = await axios.patch(`http://localhost:3000/commands/${id}`, payload);
-  
-      // Update commands state
+
       setCommands(commands.map(command => {
         if (command._id === id) {
           return {
             ...command,
             quantity: response.data.quantity,
-            totalPrice: response.data.totalPrice, // If totalPrice is returned from server
-            // Optionally, preserve client and product data from existing command
+            totalPrice: response.data.totalPrice,
             client: command.client,
             product: command.product,
           };
         }
-        return command; // Return unchanged commands
+        return command;
       }));
-  
+
       setError(null);
       console.log(`Command with id ${id} modified successfully.`);
     } catch (error) {
       handleAxiosError(error, 'modify command');
     }
   };
-  
+
   const handleDeleteCommand = async (id: string) => {
     try {
       await axios.delete(`http://localhost:3000/commands/${id}`);
@@ -166,6 +164,14 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       handleAxiosError(error, 'delete command');
     }
+  };
+
+  const handleUpdateClient = (updatedClient: Client) => {
+    setClients(clients.map(client => (client._id === updatedClient._id ? updatedClient : client)));
+  };
+
+  const handleDeleteClient = (clientId: string) => {
+    setClients(clients.filter(client => client._id !== clientId));
   };
 
   const handleProductAdded = () => {
@@ -186,20 +192,19 @@ const Dashboard: React.FC = () => {
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <button className="header-button" onClick={fetchClients}>See All Clients</button>
         <button className="header-button" onClick={handleShowAddClient}>Add New Client</button>
+        <button className="header-button" onClick={fetchClients}>See All Clients</button>
+        <button className="header-button" onClick={handleAddProduct}>Add Products</button>
+        <button className="header-button" onClick={handleShowProducts}>See All Products</button>
         <button className="header-button" onClick={handleShowAddCommand}>Create Command</button>
         <button className="header-button" onClick={fetchCommands}>See All Commands</button>
-        <button className="header-button" onClick={handleShowProducts}>See All Products</button>
-        <button className="header-button" onClick={handleAddProduct}>Add Products</button>
       </header>
 
       {showAddCommand && <AddCommand setError={setError} setShowAddCommand={setShowAddCommand} />}
       {showAddClient && <AddClient setError={setError} setShowAddClient={setShowAddClient} />}
-      {showClients && <ClientsTable clients={clients} />}
+      {showClients && <ClientsTable clients={clients} onUpdateClient={handleUpdateClient} onDeleteClient={handleDeleteClient} />}
       {showCommands && <CommandsTable commands={commands} onModifyCommand={handleModifyCommand} onDeleteCommand={handleDeleteCommand} />}
       {showProducts && <ProductsTable products={products} />}
-
       {showAddProduct && <AddProduct onProductAdded={handleProductAdded} />}
 
       {error && <p className="error-message">{error}</p>}

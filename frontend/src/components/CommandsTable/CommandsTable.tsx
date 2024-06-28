@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CommandsTable.css';
-import ConfirmationDialog from './ConfirmationDialog';
+import ConfirmationDialog from '../ConfirmationDialog/ConfirmationDialog';
 
 interface Client {
   name: string;
@@ -131,7 +131,7 @@ const CommandsTable: React.FC<CommandsTableProps> = ({ commands, onModifyCommand
                     onChange={handleInputChange}
                   />
                 ) : (
-                  command.totalPrice
+                  `${command.totalPrice.toFixed(2)}DH`
                 )}
               </td>
               <td>

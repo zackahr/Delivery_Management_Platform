@@ -6,7 +6,7 @@ import { CreateCommandDto } from './dto/create-command.dto';
 
 @Controller('commands')
 export class CommandsController {
-    constructor(private readonly commandsService: CommandsService) {}
+    constructor(private readonly commandsService: CommandsService) { }
 
     @Post()
     @UsePipes(new ValidationPipe())
@@ -35,9 +35,15 @@ export class CommandsController {
     async remove(@Param('id') id: string) {
         return this.commandsService.removeCommand(id);
     }
-    
+
     @Get('client/:clientName')
     async findByClientName(@Param('clientName') clientName: string) {
         return this.commandsService.findCommandsByClientName(clientName);
+    }
+
+    // New endpoint to delete commands by product name
+    @Delete('byProductName/:productName')
+    async removeByProductName(@Param('productName') productName: string) {
+        return this.commandsService.removeCommandsByProductName(productName);
     }
 }

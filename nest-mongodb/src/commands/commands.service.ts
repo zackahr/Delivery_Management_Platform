@@ -97,4 +97,15 @@ export class CommandsService {
     }
     return deletedCommand;
   }
+  async removeCommandsByProductName(productName: string) {
+    // Find commands by product name and delete them
+    const product = await this.productsService.findByName(productName);
+    if (!product) {
+        throw new NotFoundException('Product not found');
+    }
+
+    // Delete commands where product matches
+    const deleteResult = await this.commandModel.deleteMany({ product: product._id });
+    return deleteResult;
+}
 }

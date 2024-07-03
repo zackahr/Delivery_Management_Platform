@@ -1,0 +1,204 @@
+.commands-table-container2 {
+  margin-top: 10vh;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: #FDFFE2;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.commands-table2 tbody tr:nth-child(even) {
+  background-color: #ffffff;
+  /* White */
+}
+
+.commands-table2 {
+  width: 100%;
+  height: 100%;
+}
+
+.commands-table2 tbody tr:nth-child(odd) {
+  background-color: #f5f5f5;
+  /* Light gray or any color close to white */
+}
+
+.command-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.command-detail-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.command-detail-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.commands-table2 button {
+  font-size: 0.7rem;
+  color: #FDFFE2;
+  background-color: #1A2130 ;
+  padding: 0.3rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.commands-table2 button:hover {
+  font-size: 1rem;
+  color: #1A2130;
+  border: 1px solid #1A2130;
+  background-color: #FDFFE2 ;
+  padding: 0.25rem 0.8rem;
+  border-radius: 1rem;
+}
+
+.command-detail-buttons button {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.command-detail-buttons button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.command-detail-buttons .modify-button {
+  background-color: #FFC700;
+  border-radius: 0.5rem;
+  border: none;
+  color: black;
+  font-weight: bold;
+}
+
+.command-detail-buttons .delete-button {
+  background-color: #f44336;
+  border-radius: 0.5rem;
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+.commands-table2{
+  width: 100%;
+}
+
+.commands-table2 th {
+  font-size: 2.5vw;
+  padding: 1vw;
+}
+
+.commands-table-container2 td {
+  padding: 1vw;
+  text-align: center;
+}
+
+.commands-table-container2 th {
+  top: 0;
+}
+
+.commands-table-container2 td {
+  font-size: 1rem;
+}
+
+.command-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it overlays everything else */
+}
+
+.command-detail-content {
+  background-color: #ffffff; /* Light background color */
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  text-align: center;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 1); /* Soft shadow for depth */
+}
+
+.command-detail-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #1A2130; /* Dark text color */
+}
+
+.command-detail-content p {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #1A2130; /* Dark text color */
+}
+
+.command-detail-content input {
+  width: 100%;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.command-detail-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.command-detail-buttons button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.command-detail-buttons .modify-button {
+  background-color: #FFC700; /* Yellow */
+  color: black;
+}
+
+.command-detail-buttons .delete-button {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+.command-detail-buttons button:hover {
+  opacity: 0.9; /* Slightly reduce opacity on hover */
+}
+
+.search-container {
+  position: absolute;
+  top: 13vh;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}

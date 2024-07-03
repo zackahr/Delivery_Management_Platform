@@ -1,49 +1,46 @@
-// src/commands/commands.controller.ts
-
 import { Controller, Post, Body, Get, Param, Patch, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CommandsService } from './commands.service';
 import { CreateCommandDto } from './dto/create-command.dto';
 
 @Controller('commands')
 export class CommandsController {
-    constructor(private readonly commandsService: CommandsService) { }
+  constructor(private readonly commandsService: CommandsService) {}
 
-    @Post()
-    @UsePipes(new ValidationPipe())
-    async create(@Body() createCommandDto: CreateCommandDto) {
-        const createdCommand = await this.commandsService.createCommand(createCommandDto);
-        return { commandId: createdCommand.id };
-    }
+  @Post()
+  @UsePipes(new ValidationPipe())
+  async create(@Body() createCommandDto: CreateCommandDto) {
+    // Determine paidStatus based on the provided paidAmount
+    createCommandDto.paidStatus = createCommandDto.paidAmount === createCommandDto.productPrice * createCommandDto.productQuantity;
 
-    @Get()
-    async findAll() {
-        return this.commandsService.findAll();
-    }
+    const createdCommand = await this.commandsService.createCommand(createCommandDto);
+    return {
+      createdAt: createdCommand.createdAt,
+      commandOwner: createdCommand.commandOwner,
+      productName: createdCommand.productName,
+      productQuantity: createdCommand.productQuantity,
+      productPrice: createdCommand.productPrice,
+      paidAmount: createdCommand.paidAmount,
+    };
+  }
 
-    @Get(':id')
-    async findOne(@Param('id') id: string) {
-        return this.commandsService.findOne(id);
-    }
+  @Get()
+  async findAll() {
+    return this.commandsService.findAll();
+  }
 
-    @Patch(':id')
-    @UsePipes(new ValidationPipe())
-    async update(@Param('id') id: string, @Body() updateCommandDto: CreateCommandDto) {
-        return this.commandsService.updateCommand(id, updateCommandDto);
-    }
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.commandsService.findOne(id);
+  }
 
-    @Delete(':id')
-    async remove(@Param('id') id: string) {
-        return this.commandsService.removeCommand(id);
-    }
+  @Patch(':id')
+  @UsePipes(new ValidationPipe())
+  async update(@Param('id') id: string, @Body() updateCommandDto: Partial<CreateCommandDto>) {
+    return this.commandsService.updateCommand(id, updateCommandDto);
+  }
 
-    @Get('client/:clientName')
-    async findByClientName(@Param('clientName') clientName: string) {
-        return this.commandsService.findCommandsByClientName(clientName);
-    }
-
-    // New endpoint to delete commands by product name
-    @Delete('byProductName/:productName')
-    async removeByProductName(@Param('productName') productName: string) {
-        return this.commandsService.removeCommandsByProductName(productName);
-    }
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return this.commandsService.removeCommand(id);
+  }
 }

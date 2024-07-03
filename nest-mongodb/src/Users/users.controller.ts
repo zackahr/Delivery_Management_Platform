@@ -17,7 +17,7 @@ export class UsersController {
             throw new HttpException('Username or Password is Incorrect', HttpStatus.UNAUTHORIZED);
         }
 
-        // Assuming user has a `role` property
+        // Assuming user has a `_id` property
         const { username, role } = user;
         return { username, role };
     }

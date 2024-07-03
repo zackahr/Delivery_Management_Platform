@@ -1,0 +1,78 @@
+/* AddCommand.css */
+
+.add-command {
+    background-color: #3f4f71;
+    margin-top: 20vh;
+    color: #ffffff;
+    padding: 4vw;
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+    max-width: 40vw;
+    text-align: center;
+}
+
+.add-command h2 {
+    margin-bottom: 2rem;
+    font-size: 2vw;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.5vw;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5vw;
+    border: 1px solid #ccc;
+    color: #000;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.add-command .next-button,
+.add-command .back-button,
+.add-command .add-button {
+    display: block;
+    width: 100%;
+    padding: 0.5vw;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.add-command .next-button,
+.add-command .back-button {
+    background-color: #5A72A0;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+
+.add-command .next-button:hover,
+.add-command .back-button:hover {
+    background-color: #fff;
+    color: #3f4f71;
+}
+
+.add-command .next-button:disabled {
+    background-color: #b0c4de; /* Lightened color to indicate disabled state */
+    cursor: not-allowed;
+}
+
+.add-command .add-button {
+    background-color: #4caf50;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+
+.add-command .add-button:hover {
+    background-color: #388e3c;
+}

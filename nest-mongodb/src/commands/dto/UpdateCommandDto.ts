@@ -1,6 +1,6 @@
 import { IsString, IsNumber, IsNotEmpty, IsBoolean, IsOptional } from 'class-validator';
 
-export class CreateCommandDto {
+export class updateCommandDto {
   @IsString()
   @IsNotEmpty()
   commandOwner: string;

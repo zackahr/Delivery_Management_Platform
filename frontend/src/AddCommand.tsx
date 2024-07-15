@@ -52,7 +52,7 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
                         createdAt: createdAt || new Date(),
                     };
 
-                    await axios.post('http://nest-mongodb:3000/commands/', newCommand);
+                    await axios.post('http://64.226.75.205:3000/commands/', newCommand);
 
                     resetForm();
                     onAddCommand(newCommand);

@@ -44,7 +44,7 @@ const Dashboard2: React.FC = () => {
       };
       setCurrentUser(currentUser);
 
-      const response = await axios.get<User>('http://nest-mongodb:3000/users/me', {
+      const response = await axios.get<User>('http://64.226.75.205:3000/users/me', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -58,7 +58,7 @@ const Dashboard2: React.FC = () => {
 
   const fetchCommands = async () => {
     try {
-      const response = await axios.get('http://nest-mongodb:3000/commands/');
+      const response = await axios.get('http://64.226.75.205:3000/commands/');
       setCommands(response.data);
       setShowTableCommands(true);
     } catch (error) {

@@ -25,7 +25,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onUserAdded, onCancel }) => {
         throw new Error('Invalid role selected');
       }
       await axios.post(
-        'http://192.168.0.107:3000/users/register',
+        'http://nest-mongodb:3000/users/register',
         { username, password, role }, // Include role in the POST request body
         { headers: { Authorization: `Bearer ${token}` } }
       );

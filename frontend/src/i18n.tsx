@@ -1,4 +1,3 @@
-// i18n.ts
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -37,14 +36,25 @@ const resources = {
             "languages": "Languages",
             "More": "More",
             "Close": "Close",
-            // Add more translations here as needed
+            "Users": "Users",
+            "Username": "Username",
+            "Password": "Password",
+            "Role": "Role",
+            "Enter Username": "Enter Username",
+            "Enter Password": "Enter Password",
+            "Login": "Login",
+            "Search by client name...": "Search by client name...",
+            "Add User": "Add User",
+            "Cancel": "Cancel",
+            "Save": "Save",
+            "Modify Command": "Modify Command",
         }
     },
     ar: {
         translation: {
             "Welcome": "مرحبا",
             "Create": "اشتر",
-            "Commands": "الأوامر",
+            "Commands": "قائمة المشتريات",
             "Logout": "تسجيل خروج",
             "Al morakochi": "المراكشي",
             "Client": "عميل",
@@ -56,15 +66,15 @@ const resources = {
             "Remain": "المبلغ المتبقي",
             "Status": "الحالة",
             "Date": "التاريخ",
-            "Amount": "السعر المدفوع",
             "Actions": "الإجراءات",
+            "Amount": "السعر المدفوع",
             "Paid": "تم الدفع",
             "Not Paid": "لم يتم الدفع",
             "Modify": "تعديل",
             "Delete": "حذف",
-            "Create New Command": "إنشاء أمر جديد",
-            "Command Owner": "مالك الأمر",
-            "Client Address": "عنوان العميل",
+            "Create New Command": "أنشاء طلبية جديدة",
+            "Command Owner": "زبون",
+            "Client Address": "عنوان زبون",
             "Product Name": "اسم المنتج",
             "Quantity is required": "الكمية مطلوبة",
             "Price per Unit": "سعر الوحدة",
@@ -72,7 +82,20 @@ const resources = {
             "Add Command": "إضافة أمر",
             "Command added successfully!": "تمت إضافة الأمر بنجاح!",
             "languages": "لغات",
-            // Add more translations here as needed
+            "More": "المزيد",
+            "Close": "إغلاق",
+            "Users": "المستخدمون",
+            "Username": "اسم المستخدم",
+            "Password": "كلمة المرور",
+            "Role": "الدور",
+            "Enter Username": "أدخل اسم المستخدم",
+            "Enter Password": "أدخل كلمة المرور",
+            "Login": "تسجيل الدخول",
+            "Search by client name...": "ابحث عن اسم العميل...",
+            "Add User": "أضف مستخدم",
+            "Cancel": "إلغاء",
+            "Save": "حفظ",
+            "Modify Command": "تعديل طلبية",
         }
     },
     fr: {
@@ -109,6 +132,17 @@ const resources = {
             "languages": "Langues",
             "More": "Plus",
             "Close": "Fermer",
+            "Users": "Utilisateurs",
+            "Username": "Nom d'utilisateur",
+            "Password": "Mot de passe",
+            "Role": "Rôle",
+            "Enter Username": "Entrez le nom d'utilisateur",
+            "Enter Password": "Entrez le mot de passe",
+            "Login": "Connexion",
+            "Search by client name...": "Rechercher par nom de client...",
+            "Add User": "Ajouter",
+            "Cancel": "Annuler",
+            "Save": "Enregistre",
         }
     }
 };
@@ -117,7 +151,7 @@ i18n
     .use(initReactI18next)
     .init({
         resources,
-        lng: 'en', // Default language
+        lng: 'ar', // Default language set to Arabic
         fallbackLng: 'en',
         interpolation: {
             escapeValue: false

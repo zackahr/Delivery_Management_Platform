@@ -44,7 +44,7 @@ const TableCommands: React.FC = () => {
 
   const fetchCommands = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/commands/');
+      const response = await axios.get('http://192.168.0.107:3000/commands/');
       const fetchedCommands = response.data.map((command: any) => ({
         _id: command._id, // Ensure this is correctly fetched from your API response
         client: command.commandOwner,
@@ -74,7 +74,7 @@ const TableCommands: React.FC = () => {
 
   const handleDeleteCommand = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/commands/${id}`);
+      await axios.delete(`http://192.168.0.107:3000/commands/${id}`);
       // Update commands state to remove the deleted command
       setCommands(commands.filter(command => command._id !== id));
       setFilteredCommands(filteredCommands.filter(command => command._id !== id)); // Also update filtered commands
@@ -116,7 +116,7 @@ const TableCommands: React.FC = () => {
           paidAmount: modifiedCommand.paidAmount,
         };
 
-        const response = await axios.patch(`http://localhost:3000/commands/${modifiedCommand._id}`, updateData);
+        const response = await axios.patch(`http://192.168.0.107:3000/commands/${modifiedCommand._id}`, updateData);
         console.log('Command modified successfully!', response.data);
 
         // Fetch updated commands

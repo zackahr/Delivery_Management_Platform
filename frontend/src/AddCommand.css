@@ -76,3 +76,33 @@
 .add-command .add-button:hover {
     background-color: #388e3c;
 }
+
+/* Media Queries for Phone Screens */
+@media (max-width: 768px) {
+    .add-command {
+        margin-top: 20vh;
+        padding: 5vw;
+        max-width: 80vw;
+    }
+
+    .add-command h2 {
+        font-size: 4vw;
+    }
+
+    .form-group label {
+        font-size: 3vw;
+        font-weight: 600;
+    }
+
+    .form-group input {
+        padding: 0.5vw;
+        font-size: 2rem;
+    }
+
+    .add-command .next-button,
+    .add-command .back-button,
+    .add-command .add-button {
+        padding: 0.5vw;
+        font-size: 1.5rem;
+    }
+}

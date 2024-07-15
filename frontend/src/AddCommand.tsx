@@ -25,7 +25,6 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
     const [productPrice, setProductPrice] = useState('');
     const [paidAmount, setPaidAmount] = useState('');
     const [createdAt, setCreatedAt] = useState<Date | null>(null);
-    const [showSuccess, setShowSuccess] = useState(false);
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -38,10 +37,10 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
     const handleAddCommand = async () => {
         if (validateStep(currentStep)) {
             try {
-                const quantityNumber = parseInt(productQuantity);
+                const quantityNumber = parseInt(productQuantity, 10);
                 const priceNumber = parseFloat(productPrice);
                 const paidAmountNumber = paidAmount ? parseFloat(paidAmount) : undefined;
-    
+
                 if (commandOwner && userAddress && productName && !isNaN(quantityNumber) && !isNaN(priceNumber)) {
                     const newCommand = {
                         commandOwner,
@@ -52,25 +51,19 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
                         paidAmount: paidAmountNumber,
                         createdAt: createdAt || new Date(),
                     };
-    
-                    const response = await axios.post('http://localhost:3000/commands/', newCommand);
-                    console.log('Command added successfully!', response.data);
+
+                    await axios.post('http://192.168.0.107:3000/commands/', newCommand);
+
+                    resetForm();
                     onAddCommand(newCommand);
-                    setShowSuccess(true);
-                    setTimeout(() => setShowSuccess(false), 2000);
                 } else {
-                    alert('Please enter valid values for all fields');
+                    alert(t('Please enter valid values for all fields'));
                 }
             } catch (error) {
-                console.error('Error adding command:', error);
-                if (error.response) {
-                    console.error('Response data:', error.response.data);
-                }
-                alert('Failed to add command. Please try again.');
+                console.error('Response data:', error);
             }
         }
     };
-    
 
     const validateStep = (step: number) => {
         let valid = true;
@@ -79,37 +72,37 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
         switch (step) {
             case 1:
                 if (!commandOwner) {
-                    newErrors.commandOwner = t('Command owner is required'); // Translate error message
+                    newErrors.commandOwner = t('Command owner is required');
                     valid = false;
                 }
                 break;
             case 2:
                 if (!userAddress) {
-                    newErrors.userAddress = t('User address is required'); // Translate error message
+                    newErrors.userAddress = t('User address is required');
                     valid = false;
                 }
                 break;
             case 3:
                 if (!productName) {
-                    newErrors.productName = t('Product name is required'); // Translate error message
+                    newErrors.productName = t('Product name is required');
                     valid = false;
                 }
                 break;
             case 4:
-                if (!productQuantity || isNaN(parseInt(productQuantity))) {
-                    newErrors.productQuantity = t('Valid quantity is required'); // Translate error message
+                if (!productQuantity || isNaN(parseInt(productQuantity, 10))) {
+                    newErrors.productQuantity = t('Valid quantity is required');
                     valid = false;
                 }
                 break;
             case 5:
                 if (!productPrice || isNaN(parseFloat(productPrice))) {
-                    newErrors.productPrice = t('Valid price is required'); // Translate error message
+                    newErrors.productPrice = t('Valid price is required');
                     valid = false;
                 }
                 break;
             case 6:
                 if (paidAmount && isNaN(parseFloat(paidAmount))) {
-                    newErrors.paidAmount = t('Valid paid amount is required'); // Translate error message
+                    newErrors.paidAmount = t('Valid paid amount is required');
                     valid = false;
                 }
                 break;
@@ -121,12 +114,45 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
         return valid;
     };
 
+    const resetForm = () => {
+        setCommandOwner('');
+        setUserAddress('');
+        setProductName('');
+        setProductQuantity('');
+        setProductPrice('');
+        setPaidAmount('');
+        setCreatedAt(null);
+        setCurrentStep(1);
+        setErrors({});
+    };
+
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {
+            setProductQuantity(value);
+        }
+    };
+
+    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (/^\d*\.?\d*$/.test(value)) {
+            setProductPrice(value);
+        }
+    };
+
+    const handlePaidAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (/^\d*\.?\d*$/.test(value)) {
+            setPaidAmount(value);
+        }
+    };
+
     const renderStepContent = () => {
         switch (currentStep) {
             case 1:
                 return (
                     <div className="form-group">
-                        <label htmlFor="commandOwner">{t('Command Owner')}</label> {/* Translate label */}
+                        <label htmlFor="commandOwner">{t('Command Owner')}</label>
                         <input
                             type="text"
                             id="commandOwner"
@@ -134,13 +160,13 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
                             onChange={(e) => setCommandOwner(e.target.value)}
                         />
                         {errors.commandOwner && <span className="error">{errors.commandOwner}</span>}
-                        <button className="next-button" onClick={handleNext} disabled={!commandOwner}>{t('Next')}</button> {/* Translate button */}
+                        <button className="next-button" onClick={handleNext} disabled={!commandOwner}>{t('Next')}</button>
                     </div>
                 );
             case 2:
                 return (
                     <div className="form-group">
-                        <label htmlFor="userAddress">{t('Client Address')}</label> {/* Translate label */}
+                        <label htmlFor="userAddress">{t('Client Address')}</label>
                         <input
                             type="text"
                             id="userAddress"
@@ -148,13 +174,13 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
                             onChange={(e) => setUserAddress(e.target.value)}
                         />
                         {errors.userAddress && <span className="error">{errors.userAddress}</span>}
-                        <button className="next-button" onClick={handleNext} disabled={!userAddress}>{t('Next')}</button> {/* Translate button */}
+                        <button className="next-button" onClick={handleNext} disabled={!userAddress}>{t('Next')}</button>
                     </div>
                 );
             case 3:
                 return (
                     <div className="form-group">
-                        <label htmlFor="productName">{t('Product Name')}</label> {/* Translate label */}
+                        <label htmlFor="productName">{t('Product Name')}</label>
                         <input
                             type="text"
                             id="productName"
@@ -162,49 +188,49 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
                             onChange={(e) => setProductName(e.target.value)}
                         />
                         {errors.productName && <span className="error">{errors.productName}</span>}
-                        <button className="next-button" onClick={handleNext} disabled={!productName}>{t('Next')}</button> {/* Translate button */}
+                        <button className="next-button" onClick={handleNext} disabled={!productName}>{t('Next')}</button>
                     </div>
                 );
             case 4:
                 return (
                     <div className="form-group">
-                        <label htmlFor="productQuantity">{t('Quantity')}</label> {/* Translate label */}
+                        <label htmlFor="productQuantity">{t('Quantity')}</label>
                         <input
                             type="text"
                             id="productQuantity"
                             value={productQuantity}
-                            onChange={(e) => setProductQuantity(e.target.value)}
+                            onChange={handleQuantityChange}
                         />
                         {errors.productQuantity && <span className="error">{errors.productQuantity}</span>}
-                        <button className="next-button" onClick={handleNext} disabled={!productQuantity || isNaN(parseInt(productQuantity))}>{t('Next')}</button>
+                        <button className="next-button" onClick={handleNext} disabled={!productQuantity || isNaN(parseInt(productQuantity, 10))}>{t('Next')}</button>
                     </div>
                 );
             case 5:
                 return (
                     <div className="form-group">
-                        <label htmlFor="productPrice">{t('Price per Unit')}</label> {/* Translate label */}
+                        <label htmlFor="productPrice">{t('Price per Unit')}</label>
                         <input
                             type="text"
                             id="productPrice"
                             value={productPrice}
-                            onChange={(e) => setProductPrice(e.target.value)}
+                            onChange={handlePriceChange}
                         />
                         {errors.productPrice && <span className="error">{errors.productPrice}</span>}
-                        <button className="next-button" onClick={handleNext} disabled={!productPrice || isNaN(parseFloat(productPrice))}>{t('Next')}</button> {/* Translate button */}
+                        <button className="next-button" onClick={handleNext} disabled={!productPrice || isNaN(parseFloat(productPrice))}>{t('Next')}</button>
                     </div>
                 );
             case 6:
                 return (
                     <div className="form-group">
-                        <label htmlFor="paidAmount">{t('Paid Amount')}</label> {/* Translate label */}
+                        <label htmlFor="paidAmount">{t('Paid Amount')}</label>
                         <input
                             type="text"
                             id="paidAmount"
                             value={paidAmount}
-                            onChange={(e) => setPaidAmount(e.target.value)}
+                            onChange={handlePaidAmountChange}
                         />
                         {errors.paidAmount && <span className="error">{errors.paidAmount}</span>}
-                        <button className="add-button" onClick={handleAddCommand} disabled={!paidAmount || isNaN(parseFloat(paidAmount))}>{t('Add Command')}</button> {/* Translate button */}
+                        <button className="add-button" onClick={handleAddCommand}>{t('Add Command')}</button>
                     </div>
                 );
             default:
@@ -214,12 +240,11 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
 
     return (
         <div className="add-command">
-            <h2>{t('Create New Command')}</h2> {/* Translate heading */}
+            <h2>{t('Create New Command')}</h2>
             {renderStepContent()}
             {currentStep > 1 && (
                 <button className="back-button" onClick={() => setCurrentStep(currentStep - 1)}>{t('Back')}</button>
             )}
-            {showSuccess && <div className="success-message">{t('Command added successfully!')}</div>} {/* Translate success message */}
         </div>
     );
 };

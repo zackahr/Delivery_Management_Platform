@@ -8,6 +8,7 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    restart: always
 
   mongo-express:
     image: mongo-express
@@ -20,6 +21,7 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: password
     depends_on:
       - mongodb
+    restart: always
 
   nest-mongodb:
     build:
@@ -28,9 +30,36 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./nest-mongodb:/app
+      - ./nest-mongodb:/app 
+      - /app/node_modules
     depends_on:
       - mongodb
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - nest-mongodb
+    restart: always
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - nest-mongodb
+    restart: always
 
 volumes:
   mongodb_data:

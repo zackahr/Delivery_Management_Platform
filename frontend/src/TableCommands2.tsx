@@ -35,7 +35,7 @@ const TableCommands2: React.FC = () => {
   // Define fetchCommands outside useEffect
   const fetchCommands = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/commands/');
+      const response = await axios.get('http://192.168.0.107:3000/commands/');
       const fetchedCommands = response.data.map((command: any) => ({
         _id: command._id,
         client: command.commandOwner,
@@ -93,7 +93,7 @@ const TableCommands2: React.FC = () => {
 
         console.log('Modified Command:', updateData); // Log the modified command
 
-        const response = await axios.patch(`http://localhost:3000/commands/${selectedCommand._id}`, updateData);
+        const response = await axios.patch(`http://192.168.0.107:3000/commands/${selectedCommand._id}`, updateData);
         console.log('Command updated successfully!', response.data);
         fetchCommands(); // Refresh commands list after modification
         handleClose();
@@ -109,7 +109,7 @@ const TableCommands2: React.FC = () => {
 
   const handleDelete = async (command: Command) => {
     try {
-      await axios.delete(`http://localhost:3000/commands/${command._id}`);
+      await axios.delete(`http://192.168.0.107:3000/commands/${command._id}`);
       // Assuming success, you may want to update state or handle success feedback
       console.log('Command deleted successfully:', command._id);
       fetchCommands(); // Refresh commands list after deletion
@@ -163,7 +163,7 @@ const TableCommands2: React.FC = () => {
                 <td>{command.product}</td>
                 <td>{command.remain?.toFixed(2) || '0.00'} DH</td>
                 <td style={{ color: command.paid ? 'green' : 'red', fontWeight: 'bold' }}>
-                  {command.paid ? t('paid') : t('Not Paid')}
+                  {command.paid ? t('Paid') : t('Not Paid')}
                 </td>
                 <td>
                   <button onClick={() => handleMoreClick(command)}>{t('More')}</button>
@@ -206,7 +206,7 @@ const TableCommands2: React.FC = () => {
               <input
                 type="number"
                 value={modifiedPrice}
-                onChange={(e) => setModifiedPrice(e.target.value)}
+                onChange={(e) => setModifiedPrice(parseFloat(e.target.value))}
               />{' '}
             </p>
             <p>
@@ -222,7 +222,7 @@ const TableCommands2: React.FC = () => {
               <input
                 type="number"
                 value={modifiedPaidAmount}
-                onChange={(e) => setModifiedPaidAmount(e.target.value)}
+                onChange={(e) => setModifiedPaidAmount(parseFloat(e.target.value))}
               />{' '}
             </p>
             <div className="command-detail-buttons">
@@ -232,7 +232,7 @@ const TableCommands2: React.FC = () => {
               <button className="delete-button" onClick={() => handleDelete(selectedCommand)}>
                 {t('Delete')}
               </button>
-              <button onClick={handleClose}>{t('Close')}</button>
+              <button className='close-btn' onClick={handleClose}>{t('Close')}</button>
             </div>
           </div>
         </div>

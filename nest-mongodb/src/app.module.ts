@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://mongodb/nestdb'),
+    MongooseModule.forRoot('mongodb://mongodb/adilapp'),
     ConfigModule.forRoot({
       isGlobal: true,
     }),

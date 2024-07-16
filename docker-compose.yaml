@@ -17,8 +17,8 @@ services:
       - "8082:8082"
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_BASICAUTH_USERNAME: adil
-      ME_CONFIG_BASICAUTH_PASSWORD: cvE(GU7&KFr6rdYL
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASS}
     depends_on:
       - mongodb
     restart: always
@@ -63,3 +63,7 @@ services:
 
 volumes:
   mongodb_data:
+
+# Example environment variables
+env_file:
+  - .env

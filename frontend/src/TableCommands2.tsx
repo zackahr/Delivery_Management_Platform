@@ -18,6 +18,8 @@ interface Command {
   createdAt: string;
 }
 
+const ip = import.meta.env.VITE_IP_ADDRESS;
+
 const TableCommands2: React.FC = () => {
   const { t } = useTranslation(); // Use the useTranslation hook
 

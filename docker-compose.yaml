@@ -8,19 +8,26 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - internal_network
     restart: always
 
   mongo-express:
     image: mongo-express
     container_name: mongo-express
     ports:
-      - "8082:8082"
+      - "127.0.0.1:8081:8081"
+    env_file:
+      - .env
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_EXPRESS_USER}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_EXPRESS_PASS}
     depends_on:
       - mongodb
+    networks:
+      - internal_network
     restart: always
 
   nest-mongodb:
@@ -34,6 +41,8 @@ services:
       - /app/node_modules
     depends_on:
       - mongodb
+    networks:
+      - internal_network
     restart: always
 
   frontend:
@@ -47,6 +56,8 @@ services:
       - /app/node_modules
     depends_on:
       - nest-mongodb
+    networks:
+      - internal_network
     restart: always
 
   nginx:
@@ -59,11 +70,14 @@ services:
     depends_on:
       - frontend
       - nest-mongodb
+    networks:
+      - internal_network
     restart: always
 
 volumes:
   mongodb_data:
 
-# Example environment variables
-env_file:
-  - .env
+networks:
+  internal_network:
+    driver: bridge
+

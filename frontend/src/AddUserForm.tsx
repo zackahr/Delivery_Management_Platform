@@ -15,6 +15,9 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onUserAdded, onCancel }) => {
   const [role, setRole] = useState<string>(''); // State for user role selection
   const [error, setError] = useState<string | null>(null);
 
+
+  const ip = import.meta.env.VITE_IP_ADDRESS;
+
   const handleAddUser = async () => {
     try {
       const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
@@ -25,7 +28,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onUserAdded, onCancel }) => {
         throw new Error('Invalid role selected');
       }
       await axios.post(
-        'http://64.226.75.205:3000/users/register',
+        `http://${ip}:3000/users/register`,
         { username, password, role }, // Include role in the POST request body
         { headers: { Authorization: `Bearer ${token}` } }
       );

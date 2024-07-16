@@ -15,6 +15,8 @@ interface User {
   role: string;
 }
 
+const ip = import.meta.env.VITE_IP_ADDRESS;
+
 const Dashboard2: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [showAddCommand, setShowAddCommand] = useState(false);
@@ -25,10 +27,7 @@ const Dashboard2: React.FC = () => {
   const isPhone = useScreenSize();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchUser();
-    fetchCommands();
-  }, []);
+
 
   const fetchUser = async () => {
     try {
@@ -37,18 +36,19 @@ const Dashboard2: React.FC = () => {
         throw new Error('No token found');
       }
 
-      const decodedToken: any = jwtDecode(token);
-      const currentUser: User = {
-        username: decodedToken.username,
-        role: decodedToken.role,
-      };
-      setCurrentUser(currentUser);
+      // const decodedToken: any = jwtDecode(token);
+      // const currentUser: User = {
+      //   username: decodedToken.username,
+      //   role: decodedToken.role,
+      // };
+      // setCurrentUser(currentUser);
 
-      const response = await axios.get<User>('http://64.226.75.205:3000/users/me', {
+      const response = await axios.get(`http://${ip}:3000/users/me/`, {
         headers: {
           Authorization: `Bearer ${token}`
-        }
+        },
       });
+      // console.log(response.data)
       setCurrentUser(response.data);
     } catch (error) {
       console.error('Error fetching user:', error);
@@ -56,9 +56,14 @@ const Dashboard2: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    fetchUser();
+    fetchCommands();
+  }, []);
+
   const fetchCommands = async () => {
     try {
-      const response = await axios.get('http://64.226.75.205:3000/commands/');
+      const response = await axios.get(`http://${ip}:3000/commands/`);
       setCommands(response.data);
       setShowTableCommands(true);
     } catch (error) {

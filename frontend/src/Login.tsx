@@ -69,6 +69,8 @@ const ErrorMessage = styled.p`
   color: red;
 `;
 
+const ip = import.meta.env.VITE_IP_ADDRESS;
+
 const Login: React.FC = () => {
   const { t } = useTranslation();
   const [username, setUsername] = useState('');
@@ -80,7 +82,7 @@ const Login: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://64.226.75.205:3000/users/login', {
+      const response = await axios.post(`http://${ip}:3000/users/login`, {
         username,
         password,
       });

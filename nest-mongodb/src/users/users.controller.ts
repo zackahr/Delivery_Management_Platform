@@ -35,6 +35,7 @@ export class UsersController {
     @UseGuards(JwtAuthGuard)
     @Get('me')
     async getMe(@Req() req: AuthenticatedRequest) {
+        // console.log(req.user.userId);
         try {
             const userId = req.user.userId; // Assuming your token payload has userId
             const user = await this.usersService.findOne(userId);

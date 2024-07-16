@@ -3,6 +3,7 @@ import axios from 'axios';
 import './AddCommand.css';
 import { useTranslation } from 'react-i18next';
 
+
 interface AddCommandProps {
     onAddCommand: (command: {
         commandOwner: string;
@@ -14,6 +15,8 @@ interface AddCommandProps {
         createdAt?: Date;
     }) => void;
 }
+
+const ip = import.meta.env.VITE_IP_ADDRESS;
 
 const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
     const { t } = useTranslation(); // Use the translation hook
@@ -52,7 +55,7 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
                         createdAt: createdAt || new Date(),
                     };
 
-                    await axios.post('http://64.226.75.205:3000/commands/', newCommand);
+                    await axios.post(`http://${ip}:3000/commands/`, newCommand);
 
                     resetForm();
                     onAddCommand(newCommand);

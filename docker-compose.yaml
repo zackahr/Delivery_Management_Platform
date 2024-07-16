@@ -18,7 +18,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
       ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: password
+      ME_CONFIG_BASICAUTH_PASSWORD: cvE(GU7&KFr6rdYL
     depends_on:
       - mongodb
     restart: always

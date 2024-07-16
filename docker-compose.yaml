@@ -17,7 +17,7 @@ services:
       - "8082:8082"
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_USERNAME: adil
       ME_CONFIG_BASICAUTH_PASSWORD: cvE(GU7&KFr6rdYL
     depends_on:
       - mongodb

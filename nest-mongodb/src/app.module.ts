@@ -5,14 +5,19 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CommandsModule } from './commands/commands.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { ConfigModule } from '@nestjs/config';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://mongodb/adilapp'),
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: `mongodb://${configService.get<string>('MONGO_USERNAME')}:${encodeURIComponent(configService.get<string>('MONGO_PASSWORD'))}@${configService.get<string>('MONGO_HOST')}:${configService.get<string>('MONGO_PORT')}/${configService.get<string>('MONGO_DB')}?authSource=admin`,
+      }),
+      inject: [ConfigService],
     }),
     UsersModule,
     CommandsModule,
@@ -21,4 +26,5 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
+

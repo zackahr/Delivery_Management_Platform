@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, Param, Patch, Delete, UsePipes, Validation
 import { CommandsService } from './commands.service';
 import { CreateCommandDto } from './dto/create-command.dto';
 
-@Controller('commands')
+@Controller('api/commands')
 export class CommandsController {
   constructor(private readonly commandsService: CommandsService) {}
 

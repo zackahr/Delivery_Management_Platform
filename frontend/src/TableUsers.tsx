@@ -52,7 +52,7 @@ const TableUsers: React.FC = () => {
       if (!token) {
         throw new Error('No token found');
       }
-      const response = await axios.get(`http://${ip}:3000/users/`, {
+      const response = await axios.get(`https://${ip}:3000/users/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(response.data);
@@ -72,7 +72,7 @@ const TableUsers: React.FC = () => {
       }
       const decodedToken: DecodedToken = jwtDecode(token);
 
-      const response = await axios.get<User>(`http://${ip}:3000/users/me`, {
+      const response = await axios.get<User>(`https://${ip}:3000/users/me`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -94,7 +94,7 @@ const TableUsers: React.FC = () => {
   const handleDeleteUser = async (id: string) => {
     try {
       const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
-      await axios.delete(`http://${ip}:3000/users/${id}`, {
+      await axios.delete(`https://${ip}:3000/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(users.filter(user => user._id !== id));
@@ -122,7 +122,7 @@ const TableUsers: React.FC = () => {
     if (modifiedUser) {
       try {
         const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
-        const response = await axios.patch(`http://${ip}:3000/users/${modifiedUser._id}`, modifiedUser, {
+        const response = await axios.patch(`https://${ip}:3000/users/${modifiedUser._id}`, modifiedUser, {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log('User modified successfully!', response.data);

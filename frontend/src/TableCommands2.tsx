@@ -37,7 +37,7 @@ const TableCommands2: React.FC = () => {
   // Define fetchCommands outside useEffect
   const fetchCommands = async () => {
     try {
-      const response = await axios.get(`http://${ip}:3000/commands/`);
+      const response = await axios.get(`https://${ip}:3000/commands/`);
       const fetchedCommands = response.data.map((command: any) => ({
         _id: command._id,
         client: command.commandOwner,
@@ -95,7 +95,7 @@ const TableCommands2: React.FC = () => {
 
         console.log('Modified Command:', updateData); // Log the modified command
 
-        const response = await axios.patch(`http://${ip}:3000/commands/${selectedCommand._id}`, updateData);
+        const response = await axios.patch(`https://${ip}:3000/commands/${selectedCommand._id}`, updateData);
         console.log('Command updated successfully!', response.data);
         fetchCommands(); // Refresh commands list after modification
         handleClose();
@@ -111,7 +111,7 @@ const TableCommands2: React.FC = () => {
 
   const handleDelete = async (command: Command) => {
     try {
-      await axios.delete(`http://${ip}:3000/commands/${command._id}`);
+      await axios.delete(`https://${ip}:3000/commands/${command._id}`);
       // Assuming success, you may want to update state or handle success feedback
       console.log('Command deleted successfully:', command._id);
       fetchCommands(); // Refresh commands list after deletion

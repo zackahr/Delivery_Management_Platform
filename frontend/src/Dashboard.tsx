@@ -36,14 +36,7 @@ const Dashboard2: React.FC = () => {
         throw new Error('No token found');
       }
 
-      // const decodedToken: any = jwtDecode(token);
-      // const currentUser: User = {
-      //   username: decodedToken.username,
-      //   role: decodedToken.role,
-      // };
-      // setCurrentUser(currentUser);
-
-      const response = await axios.get(`http://${ip}:3000/users/me/`, {
+      const response = await axios.get(`https://${ip}:3000/users/me/`, {
         headers: {
           Authorization: `Bearer ${token}`
         },
@@ -63,7 +56,7 @@ const Dashboard2: React.FC = () => {
 
   const fetchCommands = async () => {
     try {
-      const response = await axios.get(`http://${ip}:3000/commands/`);
+      const response = await axios.get(`https://${ip}:3000/commands/`);
       setCommands(response.data);
       setShowTableCommands(true);
     } catch (error) {

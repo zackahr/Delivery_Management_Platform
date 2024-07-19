@@ -1,20 +1,17 @@
-# Use a Node.js base image
-FROM node:latest
+# Dockerfile for nest-mongodb
+FROM node:16
 
-# Set the working directory inside the container
+# Create app directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Install app dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code to the working directory
+# Copy app source code
 COPY . .
 
-# Expose the port your app runs on
+# Expose port and start application
 EXPOSE 3000
-
-# Command to run your app
 CMD ["npm", "run", "start:dev"]
+

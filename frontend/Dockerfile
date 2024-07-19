@@ -1,20 +1,17 @@
-# Use a more recent stable Node.js image as the base image
-FROM node:latest
+# Dockerfile for frontend
+FROM node:16
 
-# Set the working directory inside the container
+# Create app directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the container
+# Install app dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code to the container
+# Copy app source code
 COPY . .
 
-# Expose the port Vite uses
-EXPOSE 5173
-
-# Command to run the application
+# Expose port and start application
+EXPOSE 8080
 CMD ["npm", "run", "dev"]
+

@@ -28,7 +28,7 @@ const AddUserForm: React.FC<AddUserFormProps> = ({ onUserAdded, onCancel }) => {
         throw new Error('Invalid role selected');
       }
       await axios.post(
-        `http://${ip}:3000/users/register`,
+        `https://${ip}:3000/users/register`,
         { username, password, role }, // Include role in the POST request body
         { headers: { Authorization: `Bearer ${token}` } }
       );

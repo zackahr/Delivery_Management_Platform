@@ -36,7 +36,7 @@ const Dashboard2: React.FC = () => {
         throw new Error('No token found');
       }
 
-      const response = await axios.get(`https://${ip}:3000/users/me/`, {
+      const response = await axios.get(`https://${ip}/api/users/me/`, {
         headers: {
           Authorization: `Bearer ${token}`
         },
@@ -56,7 +56,7 @@ const Dashboard2: React.FC = () => {
 
   const fetchCommands = async () => {
     try {
-      const response = await axios.get(`https://${ip}:3000/commands/`);
+      const response = await axios.get(`https://${ip}/api/commands/`);
       setCommands(response.data);
       setShowTableCommands(true);
     } catch (error) {

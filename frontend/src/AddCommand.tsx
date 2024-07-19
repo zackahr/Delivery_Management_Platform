@@ -55,7 +55,7 @@ const AddCommand: React.FC<AddCommandProps> = ({ onAddCommand }) => {
                         createdAt: createdAt || new Date(),
                     };
 
-                    await axios.post(`https://${ip}:3000/commands/`, newCommand);
+                    await axios.post(`https://${ip}/api/commands/`, newCommand);
 
                     resetForm();
                     onAddCommand(newCommand);

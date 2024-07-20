@@ -4,7 +4,6 @@ import './Dashboard.css'; // Import CSS styles for Dashboard
 import { useScreenSize } from './useScreenSize';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { jwtDecode } from 'jwt-decode';
 import AddCommand from './AddCommand';
 import TableCommands from './TableCommands';
 import TableCommands2 from './TableCommands2';
@@ -27,8 +26,6 @@ const Dashboard2: React.FC = () => {
   const isPhone = useScreenSize();
   const navigate = useNavigate();
 
-
-
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -41,8 +38,13 @@ const Dashboard2: React.FC = () => {
           Authorization: `Bearer ${token}`
         },
       });
-      // console.log(response.data)
       setCurrentUser(response.data);
+      // Determine initial state based on user role
+      if (response.data.role === 'admin') {
+        setShowTableCommands(true); // Admins will see the commands table by default
+      } else {
+        setShowAddCommand(true); // Non-admins will see the Create section by default
+      }
     } catch (error) {
       console.error('Error fetching user:', error);
       navigate('/login', { replace: true });
@@ -58,7 +60,6 @@ const Dashboard2: React.FC = () => {
     try {
       const response = await axios.get(`https://${ip}/api/commands/`);
       setCommands(response.data);
-      setShowTableCommands(true);
     } catch (error) {
       console.error('Error fetching commands:', error);
     }
@@ -71,13 +72,17 @@ const Dashboard2: React.FC = () => {
   };
 
   const handleShowCommands = () => {
-    setShowTableCommands(true);
+    if (currentUser?.role === 'admin') {
+      setShowTableCommands(true);
+    }
     setShowAddCommand(false);
-    setShowTableUsers(false); // Ensure TableUsers is hidden when showing TableCommands
+    setShowTableUsers(false);
   };
 
   const handleShowUsers = () => {
-    setShowTableUsers(true); // Show TableUsers when "Users" button is clicked
+    if (currentUser?.role === 'admin') {
+      setShowTableUsers(true); // Show TableUsers when "Users" button is clicked
+    }
     setShowAddCommand(false);
     setShowTableCommands(false);
   };
@@ -107,9 +112,11 @@ const Dashboard2: React.FC = () => {
             </div>
           </div>
           <button className="header-button" onClick={handleShowAddCommand}>{t('Create')}</button>
-          <button className="header-button" onClick={handleShowCommands}>{t('Commands')}</button>
           {currentUser?.role === 'admin' && (
-            <button className="header-button" onClick={handleShowUsers}>{t('Users')}</button>
+            <>
+              <button className="header-button" onClick={handleShowCommands}>{t('Commands')}</button>
+              <button className="header-button" onClick={handleShowUsers}>{t('Users')}</button>
+            </>
           )}
           <button className="header-button logout-button" onClick={handleLogout}>{t('Logout')}</button>
         </div>
@@ -126,3 +133,4 @@ const Dashboard2: React.FC = () => {
 };
 
 export default Dashboard2;
+

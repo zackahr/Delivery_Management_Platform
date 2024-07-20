@@ -11,6 +11,10 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: Lucian12ZZ
     volumes:
       - mongodb_data:/data/db
+      - ./mongodb/mongodb_backup.sh:/usr/local/bin/mongodb_backup.sh
+      - ./mongodb/mongo-cron:/etc/cron.d/mongo-cron
+      - ./mongodb_backup:/data/backup  # Ensure this mapping is correct
+      - /etc/localtime:/etc/localtime:ro  # For correct cron time zone
     restart: always
 
   mongo-express:
@@ -77,4 +81,5 @@ services:
 
 volumes:
   mongodb_data:
+  mongodb_backup:
 

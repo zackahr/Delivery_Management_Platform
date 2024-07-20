@@ -22,5 +22,5 @@ RUN touch /var/log/cron.log
 RUN chmod +x /usr/local/bin/mongodb_backup.sh
 
 # Start cron service and MongoDB
-CMD cron && tail -f /var/log/cron.log & mongod --auth --bind_ip_all
+CMD cron && tail -f /var/log/cron.log & mongod --auth --bind_ip 127.0.0.1,104.248.165.56
 

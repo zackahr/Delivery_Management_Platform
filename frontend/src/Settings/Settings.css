@@ -1,0 +1,136 @@
+.settings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.settings h3 {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #343a40;
+  text-align: center;
+}
+
+.settings form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;  
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.settings div {
+  margin-bottom: 1rem;  
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.settings label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.settings input {
+  /* width: 100vw; */
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.settings input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.settings button {
+  font-size: 1rem;
+  color: #fff;
+  background-color: #00897b;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 1s ease;
+  width: 100%;
+}
+
+.settings button:hover {
+  background-color: #00695c;
+}
+
+.settings p {
+  text-align: center;
+  color: #888;
+}
+
+.password-container {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .settings-content {
+    padding: 1rem;
+  }
+
+  .settings h1 {
+    font-size: 20px;
+  }
+
+  .settings input {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .settings button {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+
+/* Spinner styles */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

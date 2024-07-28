@@ -1,0 +1,165 @@
+.add-command-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-command-container h3 {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: #343a40;
+  text-align: center;
+}
+
+.add-command-container form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-command-container label {
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.add-command-container input {
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #f9f9f9; 
+}
+
+.add-command-container input:focus {
+  outline: none;
+  border-color: #80bdff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.add-command-container button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #00897b;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.add-command-container button:hover {
+  background-color: #00695c;
+}
+.input-group {
+
+}
+.client-dropdown {
+  position: absolute;
+  top: 9.5rem;
+  left: 2.5rem;
+  /* max-height: 150px; */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: white;
+  /* border: 1px solid black; */
+  z-index: 1;
+  /* margin-top: 5px; */
+  width: 80%;
+  /* max-width: 400px; */
+}
+
+.client-dropdown li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.client-dropdown li:hover {
+  background-color: #eee;
+}
+
+.error {
+  color: #dc3545;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.btn {
+  background-color: #00897b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 1s ease;
+  margin-top: 1rem;
+}
+
+.btn:hover {
+  background-color: #00695c;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .add-command-container {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .add-command-container h2 {
+    font-size: 20px;
+  }
+
+  .add-command-container input {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .add-command-container button {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .client-dropdown {
+    max-height: 200px;
+  }
+
+  .success-popup {
+    width: 90%;
+    top: 10px;
+    right: 10px;
+    padding: 10px;
+  }
+}
+
+/* Success message styles */
+.success-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #d4edda; /* Light green background */
+  color: #155724; /* Dark green text */
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-width: 300px;
+  width: 90%;
+  text-align: center;
+}

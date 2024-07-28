@@ -1,0 +1,148 @@
+.commands-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.commands-table th,
+.commands-table td {
+    border: 1px solid #ddd;
+    padding: 12px 8px;
+    text-align: left;
+}
+
+.commands-table th {
+    background-color: #006d63;
+    color: white;
+    font-weight: bold;
+}
+
+.commands-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.commands-table tr:hover {
+    background-color: #e0f7fa;
+}
+
+.commands-table td {
+    background-color: white;
+    color: #333;
+}
+
+.modify,
+.delete {
+    margin-right: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.modify {
+    background-color: #00897b;
+}
+
+.delete {
+    background-color: #d32f2f;
+}
+
+.modify:hover {
+    background-color: #006d63;
+}
+
+.delete:hover {
+    background-color: #b71c1c;
+}
+
+.modify-command-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.modify-command-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-buttons .save,
+.form-buttons .cancel {
+    width: 45%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.form-buttons .save {
+    background-color: #00897b;
+    color: white;
+}
+
+.form-buttons .cancel {
+    background-color: #d32f2f;
+    color: white;
+}
+
+.form-buttons .save:hover {
+    background-color: #006d63;
+}
+
+.form-buttons .cancel:hover {
+    background-color: #b71c1c;
+}
+
+@media screen and (max-width: 768px) {
+    .commands-table {
+        font-size: 14px;
+    }
+
+    .commands-table th,
+    .commands-table td {
+        padding: 10px 6px;
+    }
+
+    .modify,
+    .delete {
+        padding: 6px 10px;
+    }
+}

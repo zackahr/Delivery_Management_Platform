@@ -1,0 +1,255 @@
+.location-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.location-detail-content {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.location-detail table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.location-detail th, .location-detail td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.location-detail th {
+  background-color: #00897B;
+  color: white;
+}
+
+.location-detail tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.location-detail tbody tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+.more-button {
+  display: inline-block;
+  padding: 5px 10px;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.more-button:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .location-detail th:nth-child(3),
+  .location-detail th:nth-child(4),
+  .location-detail th:nth-last-child(-n+2),
+  .location-detail td:nth-child(3),
+  .location-detail td:nth-child(4),
+  .location-detail td:nth-last-child(-n+2) {
+    display: none;
+  }
+
+  .location-detail th:last-child,
+  .location-detail td:last-child {
+    display: table-cell;
+    text-align: center;
+  }
+
+  .location-detail th:last-child {
+    background-color: #f4f4f4;
+  }
+
+  .more-button {
+    display: inline-block;
+    padding: 5px 10px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .more-button:hover {
+    background-color: #218838;
+  }
+}
+
+/* Modal background */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000; /* Ensure modal is above other content */
+}
+
+/* Modal container */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px; /* Limit max width for larger screens */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative; /* For close button positioning */
+}
+
+/* Close button */
+.modal-content .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-content .close-button:hover {
+  color: #333;
+}
+
+/* Form elements */
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Buttons container */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-content button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-content .update-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.modal-content .update-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.modal-content .delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.modal-content .delete-button:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.modal-content .cancel-button {
+  background-color: #6c757d;
+  color: white;
+}
+
+.modal-content .cancel-button:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+
+/* Confirmation dialog */
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmation p {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.confirmation button {
+  margin: 0 5px;
+}
+
+.confirm-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.confirm-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+/* Spinner styles */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.loading-spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

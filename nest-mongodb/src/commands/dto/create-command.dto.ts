@@ -1,17 +1,9 @@
-import { IsString, IsNumber, IsNotEmpty, IsBoolean, IsOptional } from 'class-validator';
+import { IsString, IsNumber, IsNotEmpty } from 'class-validator';
 
 export class CreateCommandDto {
   @IsString()
   @IsNotEmpty()
-  commandOwner: string;
-
-  @IsString()
-  @IsNotEmpty()
-  userAddress: string;
-
-  @IsString()
-  @IsNotEmpty()
-  productName: string;
+  clientName: string;
 
   @IsNumber()
   @IsNotEmpty()
@@ -21,16 +13,19 @@ export class CreateCommandDto {
   @IsNotEmpty()
   productQuantity: number;
 
+  @IsNumber()
+  @IsNotEmpty()
   totalPrice: number;
 
   @IsNumber()
   @IsNotEmpty()
-  paidAmount: number;
+  priceGivenByClient: number;
 
-  paidRemain: number;
+  @IsNumber()
+  @IsNotEmpty()
+  priceRest: number; // Added this field
 
-  paidStatus: boolean;
-
-  @IsOptional()
-  createdAt?: Date; // Created at
+  @IsString()
+  @IsNotEmpty()
+  clientStatus: string;
 }

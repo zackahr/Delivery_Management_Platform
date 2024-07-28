@@ -1,0 +1,90 @@
+/* No body styles here */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 0 auto; /* Center the container horizontally */
+  position: relative; /* For better positioning control */
+  top: 50%; /* Center vertically within its container */
+  transform: translateY(50%); /* Adjust position to truly center vertically */
+}
+
+form {
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  color: #00897b;
+  margin-bottom: 1.5rem;
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #00897b;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f4f4f4;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  outline: none;
+  color: #333;
+}
+
+.btn {
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #00897b;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.75rem;
+  transition: background-color 0.3s; /* Adjusted timing for a smoother effect */
+}
+
+.btn:hover {
+  background-color: #00695c;
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+  }
+}

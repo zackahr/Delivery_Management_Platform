@@ -1,37 +1,38 @@
+// src/command/schemas/command.schema.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
+import { User } from './user.schema';
 
-@Schema({ timestamps: true })
+@Schema()
 export class Command extends Document {
   @Prop({ required: true })
-  commandOwner: string; // Command owner
+  clientName: string;
 
   @Prop({ required: true })
-  userAddress: string; // User address
-
-  @Prop({ required: true })
-  productName: string; // Product name
-
-  @Prop({ required: true})
   productPrice: number;
 
   @Prop({ required: true })
-  productQuantity: number; // Product Quantity
+  productQuantity: number;
 
-  @Prop({ required: false })
-  totalPrice: number; // Total Price
+  @Prop({ required: true })
+  totalPrice: number;
 
-  @Prop({ default: 0 })
-  paidAmount: number; // Paid Amount
+  @Prop({ required: true })
+  priceGivenByClient: number;
 
-  @Prop({ default: 0 })
-  paidRemain: number; // Paid Remain
+  @Prop()
+  priceRest: number;
 
-  @Prop({ default: false })
-  paidStatus: boolean; // Paid Status
+  @Prop({ required: true })
+  clientStatus: string;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
+  createdBy: User;
 
   @Prop({ default: Date.now })
-  createdAt: Date; // Created at
+  createdAt: Date;
 }
 
 export const CommandSchema = SchemaFactory.createForClass(Command);
+
+export type CommandDocument = Command & Document;

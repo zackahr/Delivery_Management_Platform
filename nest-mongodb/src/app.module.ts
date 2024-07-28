@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CommandsModule } from './commands/commands.module';
+import { CommandModule } from './commands/commands.module';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { LocationModule } from './location/location.module';
+import { ClientModule } from './client/client.module';
 
 @Module({
   imports: [
@@ -19,9 +21,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       }),
       inject: [ConfigService],
     }),
-    UsersModule,
-    CommandsModule,
+    UserModule,
+    CommandModule,
     AuthModule,
+    LocationModule,
+    ClientModule,
   ],
   controllers: [AppController],
   providers: [AppService],

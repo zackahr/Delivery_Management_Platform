@@ -48,6 +48,8 @@ const resources = {
             "Cancel": "Cancel",
             "Save": "Save",
             "Modify Command": "Modify Command",
+            "User not found": "User not found",
+            "Invalid password": "Invalid password",
         }
     },
     ar: {
@@ -57,7 +59,7 @@ const resources = {
             "Commands": "قائمة المشتريات",
             "Logout": "تسجيل خروج",
             "Al morakochi": "المراكشي",
-            "Client": "زبون",
+            "Client": "زبائن",
             "Address": "عنوان",
             "Product": "منتج",
             "Price": "الثمن",
@@ -79,12 +81,12 @@ const resources = {
             "Quantity is required": "الكمية مطلوبة",
             "Price per Unit": "سعر الوحدة",
             "Paid Amount": "دفع",
-            "Add Command": "إضافة أمر",
+            "Add Command": "أنشاء طلبية جديدة",
             "Command added successfully!": "تمت إضافة الأمر بنجاح!",
             "languages": "لغات",
             "More": "المزيد",
             "Close": "إغلاق",
-            "Users": "المستخدمون",
+            "Users": "قائمة المشتريات",
             "Username": "اسم المستخدم",
             "Password": "كلمة المرور",
             "Role": "الدور",
@@ -107,7 +109,20 @@ const resources = {
             "Location Name": "اسم الموقع",
             "phone number": "رقم التليفون",
             "Balance": "كريدي",
-            "Create User": "أضف مستخدم"
+            "Create User": "أضف مستخدم",
+            "Location": "الموقع",
+            "Show Map": "إظهار",
+            "daily summary": "ملخص يومي",
+            "Clients Left": "باقي زبائن",
+            "User not found": "المستخدم غير موجود",
+            "Invalid password": "كلمة المرور غير صحيحة",
+            "Time": "الوقت",
+            "Select Date": "اختر التاريخ",
+            "Yes": "نعم",
+            "No": "لا",
+            "Are you sure you want to delete this command?": "هل أنت متأكد أنك تريد حذف هذا طلبية",
+            "Number of customers served": "نسبة الزبائن الذين تم خدمتهم",
+            "Not served Yet": "عملاء الباقين",
         }
     },
     fr: {
@@ -155,6 +170,11 @@ const resources = {
             "Add User": "Ajouter",
             "Cancel": "Annuler",
             "Save": "Enregistre",
+            "User not found": "Utilisateur non trouvé",
+            "Invalid password": "Mot de passe invalide",
+            "Yes": "Oui",
+            "No": "Non",
+            "Confirm Delete": "Êtes-vous sûr de vouloir supprimer cette commande ?",
         }
     }
 };

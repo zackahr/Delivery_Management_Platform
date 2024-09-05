@@ -185,12 +185,3 @@
     padding: 5px 0;
   }
 }
-.client-status-paid {
-  color: green;
-  font-weight: bold;
-}
-
-.client-status-not-paid {
-  color: red;
-  font-weight: bold;
-}

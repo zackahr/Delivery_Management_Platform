@@ -1,1 +1,3 @@
-0 2 * * * root /usr/local/bin/mongodb_backup.sh
+# Run the backup script every day at midnight
+* * * * * /usr/local/bin/mongodb_backup.sh >> /var/log/cron.log 2>&1
+

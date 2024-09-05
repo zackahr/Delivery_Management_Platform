@@ -1,13 +1,7 @@
+// api/useAxiosInterceptor.ts
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-const ip = import.meta.env.VITE_IP_ADDRESS;
-
-const axiosInstance = axios.create({
-  baseURL: `https://${ip}/api/`,
-  withCredentials: true, // Ensure cookies are sent with requests
-});
+import { axiosInstance } from './axiosInstance';
 
 const useAxiosInterceptor = () => {
   const navigate = useNavigate();
@@ -17,9 +11,10 @@ const useAxiosInterceptor = () => {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          // Handle token expiration
+          // Handle token expiration or authentication error
           localStorage.removeItem('token');
-          navigate('/'); // Use navigate instead of window.location.href
+          localStorage.removeItem('location');  
+          navigate('/login'); // Redirect to login
         }
         return Promise.reject(error);
       }
@@ -29,9 +24,6 @@ const useAxiosInterceptor = () => {
       axiosInstance.interceptors.response.eject(interceptor);
     };
   }, [navigate]);
-  useEffect(() => {
-    axiosInstance.defaults.withCredentials = true;
-  }, []);
 };
 
-export { axiosInstance, useAxiosInterceptor };
+export { useAxiosInterceptor };

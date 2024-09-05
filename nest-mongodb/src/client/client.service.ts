@@ -1,4 +1,3 @@
-// src/client/client.service.ts
 import { Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -16,23 +15,24 @@ export class ClientService {
     @InjectModel(Command.name) private commandModel: Model<Command>,
     @InjectModel(Location.name) private locationModel: Model<LocationDocument>,
     private readonly userService: UserService,
-  ) { }
+  ) {}
 
   async create(createClientDto: CreateClientDto, request: AuthenticatedRequest): Promise<Client> {
     const user = await this.userService.findById(request.user._id);
-  
+
     if (!user || !user.location) {
       throw new UnauthorizedException('User is not authenticated or does not have a location assigned.');
     }
-  
+
     const newClient = new this.clientModel({
       ...createClientDto,
-      location: user.location,
+      location: user.location, // Assign user's location to the client
       balance: 0, // Initialize balance to 0
+      clientLocation: createClientDto.clientLocation, // Include client-specific location
     });
-  
+
     return newClient.save();
-  }  
+  }
 
   async findAll(): Promise<Client[]> {
     return this.clientModel.find().populate('location').exec();
@@ -50,12 +50,15 @@ export class ClientService {
   }
 
   async findByName(clientName: string): Promise<Client> {
-    console.log("client name: ", clientName)
+    console.log("client name: ", clientName);
     return this.clientModel.findOne({ name: clientName }).exec();
   }
 
   async update(id: string, updateClientDto: CreateClientDto): Promise<Client> {
-    return this.clientModel.findByIdAndUpdate(id, updateClientDto, { new: true }).populate('location').exec();
+    return this.clientModel
+      .findByIdAndUpdate(id, updateClientDto, { new: true })
+      .populate('location')
+      .exec();
   }
 
   async delete(id: string): Promise<Client> {
@@ -65,7 +68,6 @@ export class ClientService {
   async updateClientBalance(clientName: string): Promise<void> {
     // Fetch all commands for the given client name
     const commands = await this.commandModel.find({ clientName }).exec();
-    // console.log("commands found is ==>", commands);
   
     // Calculate the balance based on the fetched commands
     const balance = commands.reduce((acc, command) => {
@@ -79,7 +81,8 @@ export class ClientService {
     // Update the client's balance in the database
     const updateResult = await this.clientModel.updateOne({ name: clientName }, { balance }).exec();
     console.log(`Update result: ${updateResult}`);
-  }  
+  }
+
   async findByLocationName(locationName: string): Promise<Client[]> {
     // Find the location by name
     const location = await this.locationModel.findOne({ name: locationName }).exec();

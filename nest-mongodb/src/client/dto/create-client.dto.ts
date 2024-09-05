@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsObject } from 'class-validator';
 
 export class CreateClientDto {
   @IsString()
@@ -12,7 +12,14 @@ export class CreateClientDto {
   @IsOptional()
   balance?: number;
 
-  // @IsString()
-  // @IsOptional()
-  // status?: string;
+  @IsObject()
+  clientLocation: {  // Make clientLocation required
+    latitude: number;
+    longitude: number;
+    address?: string;
+  };
+
+  @IsString()
+  @IsOptional()
+  location?: string; // Can be used to update the location if necessary
 }

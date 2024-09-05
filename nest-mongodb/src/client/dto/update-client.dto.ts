@@ -1,4 +1,4 @@
-import { IsString, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsObject } from 'class-validator';
 
 export class UpdateClientDto {
   @IsString()
@@ -9,9 +9,13 @@ export class UpdateClientDto {
   @IsOptional()
   phone?: string;
 
-  @IsString()
+  @IsObject()
   @IsOptional()
-  location?: string; // Can be used to update the location if necessary
+  clientLocation?: {
+    latitude?: number;
+    longitude?: number;
+    address?: string;
+  };
 
   @IsNumber()
   @IsOptional()
@@ -19,5 +23,5 @@ export class UpdateClientDto {
 
   @IsString()
   @IsOptional()
-  status?: string;
+  location?: string; // Can be used to update the location if necessary
 }

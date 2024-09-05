@@ -6,6 +6,7 @@ import { CreateCommandDto } from './dto/create-command.dto';
 import { Client, ClientDocument } from '../schemas/client.schema';
 import { ClientService } from 'src/client/client.service';
 import { UserService } from 'src/user/user.service';
+import { startOfDay, endOfDay } from 'date-fns';
 
 @Injectable()
 export class CommandService {
@@ -131,5 +132,18 @@ export class CommandService {
   async getClientCommands(clientId: string): Promise<Command[]> {
     console.log('Fetching commands for client:', clientId);
     return this.commandModel.find({ createdBy: clientId }).exec();
+  }
+
+  async getCommandsByDate(userId: string, date: Date): Promise<Command[]> {
+    const start = startOfDay(date);
+    const end = endOfDay(date);
+
+    return this.commandModel.find({
+      createdBy: userId,
+      createdAt: {
+        $gte: start,
+        $lt: end,
+      },
+    }).exec();
   }
 }

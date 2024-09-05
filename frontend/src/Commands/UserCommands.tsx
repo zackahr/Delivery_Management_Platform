@@ -44,32 +44,83 @@ const UserCommands: React.FC = () => {
   const [updatedPriceGiven, setUpdatedPriceGiven] = useState<string>('');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [dailySummaries, setDailySummaries] = useState<DailySummary[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]); // Initialize with today's date
+  const [allClients, setAllClients] = useState<string[]>([]); // Store all client IDs
+  const [clientsWithCommands, setClientsWithCommands] = useState<string[]>([]); // Store clients who received commands
+  const [clients, setClients] = useState<any[]>([]); // Adjust type if needed
+  const [totalClients, setTotalClients] = useState<number>(0);
 
-  const fetchCommands = async () => {
+  const fetchAllClients = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`https://${ip}/api/command/creator/${userId}`, {
+      const response = await axios.get(`https://${ip}/api/client`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      const grouped = groupCommandsByDate(response.data);
-      setCommands(grouped);
-      calculateDailySummaries(response.data);
+
+      const clientsArray = response.data || [];
+
+      if (Array.isArray(clientsArray)) {
+        setClients(clientsArray);
+        setTotalClients(clientsArray.length);
+      } else {
+        console.error('Unexpected data format:', response.data);
+      }
     } catch (error) {
-      console.error('Error fetching commands:', error);
+      console.error('Error fetching clients:', error);
     }
   };
+  
+  useEffect(() => {
+    fetchCommands(selectedDate);
+    fetchAllClients(); // Fetch all clients when component mounts
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [userId, selectedDate]);
 
   const groupCommandsByDate = (commands: Command[]): GroupedCommands => {
-    return commands.reduce((acc: GroupedCommands, command: Command) => {
+    const clientsSet = new Set<string>(); // Store unique client IDs
+    const grouped = commands.reduce((acc: GroupedCommands, command: Command) => {
       const date = new Date(command.createdAt).toISOString().split('T')[0];
       if (!acc[date]) {
         acc[date] = [];
       }
       acc[date].push(command);
+      clientsSet.add(command.clientName); // Add the client ID to the set
       return acc;
     }, {});
+
+    const uniqueClientsForDate = Array.from(clientsSet); // Get unique clients for the selected date
+    setClientsWithCommands(uniqueClientsForDate); // Store unique clients
+    return grouped;
+  };
+  
+
+  const fetchCommands = async (date: string) => {
+    try {
+      const token = localStorage.getItem('token');
+      const formattedDate = new Date(date).toISOString().split('T')[0];
+
+      const response = await axios.get(`https://${ip}/api/command/date/${formattedDate}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const commandsArray = response.data?.data || [];
+
+      if (Array.isArray(commandsArray)) {
+        const grouped = groupCommandsByDate(commandsArray);
+        setCommands(grouped);
+        calculateDailySummaries(commandsArray);
+      } else {
+        console.error('Unexpected data format:', response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching commands:', error);
+    }
   };
 
   const calculateDailySummaries = (commands: Command[]) => {
@@ -99,11 +150,15 @@ const UserCommands: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchCommands();
+    fetchCommands(selectedDate);
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [userId]);
+  }, [userId, selectedDate]);
+
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedDate(event.target.value);
+  };
 
   const handleDeleteCommand = async (commandId: string) => {
     try {
@@ -113,7 +168,7 @@ const UserCommands: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      fetchCommands();
+      fetchCommands(selectedDate);
     } catch (error) {
       console.error('Error deleting command:', error);
     }
@@ -155,7 +210,7 @@ const UserCommands: React.FC = () => {
         },
       });
 
-      fetchCommands();
+      fetchCommands(selectedDate);
       setIsFormVisible(false);
     } catch (error) {
       console.error('Error updating command:', error);
@@ -165,11 +220,14 @@ const UserCommands: React.FC = () => {
   return (
     <div>
       <DashboardHeader />
+      <div className="date-picker">
+        <label>{t('Select Date')}:</label>
+        <input type="date" value={selectedDate} onChange={handleDateChange} />
+      </div>
       {Object.keys(commands)
         .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
         .map(date => (
           <div key={date} className="daily-commands">
-            <h2>{t('Commands for')} {date}</h2>
             <div className="commands-table-container">
               {isMobile ? (
                 <CommandTablePhone
@@ -190,10 +248,8 @@ const UserCommands: React.FC = () => {
                 .filter(summary => summary.date === date)
                 .map((summary) => (
                   <div key={summary.date} className="summary-row">
-                    <div>{t('Date')}: {summary.date}</div>
                     <div>{t('Total Quantity')}: {summary.totalQuantity}</div>
-                    <div>{t('Total Amount')}: {summary.totalAmount.toFixed(2)}</div>
-                    <div>{t('Total money Given')}: {summary.totalPriceGiven.toFixed(2)}</div>
+                    <div>{t('Total')}: {summary.totalAmount.toFixed(2)}</div>
                     <div>{t('Total Rest Amount')}: {summary.totalRestAmount.toFixed(2)}</div>
                   </div>
                 ))}

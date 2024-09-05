@@ -82,4 +82,18 @@ export class CommandController {
   async getCommandsByCreator(@Param('userId') userId: string): Promise<Command[]> {
     return this.commandService.findByUserId(userId);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('date/:date')
+  async getCommandsByDate(
+    @Req() request: AuthenticatedRequest, 
+    @Param('date') date: string,
+  ) {
+    const parsedDate = new Date(date);
+    const commands = await this.commandService.getCommandsByDate(request.user._id, parsedDate);
+    return {
+      // message: 'Commands successfully retrieved',
+      data: commands,
+    };
+  }
 }

@@ -44,6 +44,8 @@ const Locations: React.FC = () => {
             },
           });
           setUserLocation(locationResponse.data.name);
+          console.log("location", locationResponse.data.name)
+          localStorage.setItem('location', locationResponse.data.name);
         }
 
         // Fetch all locations

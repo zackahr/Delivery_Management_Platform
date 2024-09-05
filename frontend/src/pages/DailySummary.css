@@ -1,0 +1,55 @@
+/* src/pages/DailySummary.css */
+
+.circle-container {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center both horizontally and vertically */
+    justify-content: center;
+    align-items: center; /* Center items vertically within the container */
+    /* border: 1px solid #000; */
+}
+
+/* Flex direction should be column by default (for mobile) */
+.circle-container {
+    flex-direction: column;
+    /* margin-bottom: 10rem; */
+    gap: 3rem; /* Space between circles */
+}
+
+/* Circle styles */
+.circle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 120px; /* Adjust width as needed */
+    height: 120px; /* Adjust height as needed */
+}
+
+.circle .progress-wrapper {
+    margin-bottom: 0.5rem; /* Space between the circle and the label */
+}
+
+.circle .label {
+    font-size: 1rem; /* Adjust font size as needed */
+    text-align: center;
+}
+.unserved-clients {
+    text-align: center;
+    font-size: 1rem; /* Adjust font size as needed */
+    padding: 1rem;
+    border: 1px solid black;
+    margin-bottom: 2vh;
+    margin-top: 5vh;
+    
+}
+
+/* Media Query for Larger Screens (Laptops) */
+@media (min-width: 768px) {
+    .circle-container {
+        flex-direction: row; /* Arrange circles horizontally */
+        height: auto;
+    }
+}

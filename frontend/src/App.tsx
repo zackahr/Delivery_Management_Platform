@@ -14,6 +14,7 @@ import AddCommand from './AddCommand/AddCommand';
 import AddClient from './AddClient/AddClient';
 import AddLocationAndUser from './user/AddLocationAndUser';
 import SettingsGlobal from './Settings/SettingsGlobal';
+import DailySummary from './pages/DailySummary';
 
 const AppRoutes: React.FC = () => {
   const { userRole } = useUserRole();
@@ -28,6 +29,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/add-command" element={<AddCommand />} />
       <Route path="/add-client" element={<AddClient />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/daily-summary" element={<DailySummary />} />
       {userRole === 'admin' && (
         <>
           <Route path="/add-location-and-user" element={<AddLocationAndUser />} />

@@ -21,6 +21,12 @@ RUN touch /var/log/cron.log
 # Make the backup script executable
 RUN chmod +x /usr/local/bin/mongodb_backup.sh
 
-# Start cron service and MongoDB
-CMD cron && tail -f /var/log/cron.log & mongod --auth --bind_ip 127.0.0.1,104.248.165.56
+# Copy the entrypoint script
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
+# Make the entrypoint script executable
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Use the entrypoint script to start services
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 

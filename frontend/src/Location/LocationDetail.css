@@ -52,10 +52,10 @@
 @media (max-width: 768px) {
   .location-detail th:nth-child(3),
   .location-detail th:nth-child(4),
-  .location-detail th:nth-last-child(-n+2),
+  .location-detail th:nth-last-child(-n+1),
   .location-detail td:nth-child(3),
   .location-detail td:nth-child(4),
-  .location-detail td:nth-last-child(-n+2) {
+  .location-detail td:nth-last-child(-n+1) {
     display: none;
   }
 
@@ -65,9 +65,6 @@
     text-align: center;
   }
 
-  .location-detail th:last-child {
-    background-color: #f4f4f4;
-  }
 
   .more-button {
     display: inline-block;
@@ -252,4 +249,27 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* LocationDetail.css */
+.map-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.map-button:hover {
+  background-color: #0056b3;
+}
+
+.location-detail .map-button {
+  margin-right: 10px;
+}
+.map-button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  color: white; /* Optional: Change the text color to white for better contrast */
 }

@@ -23,7 +23,7 @@ const DashboardHeader: React.FC = () => {
     <header className="dashboardheader">
       <div className="logo">{t('Al morakochi')}</div>
       <div className="menu-icon" onClick={toggleMenu}>
-        &#9776; {/* This represents a hamburger menu icon */}
+        &#9776;
       </div>
       <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
         {userRole === 'admin' && (
@@ -36,6 +36,7 @@ const DashboardHeader: React.FC = () => {
         <button onClick={() => navigate('/add-command')}>{t('Add Command')}</button>
         <button onClick={() => navigate('/add-client')}>{t('Add Client')}</button>
         <button onClick={() => navigate('/locations')}>{t('Client')}</button>
+        <button onClick={() => navigate('/daily-summary')}>{t('daily summary')}</button>
         <button onClick={() => navigate('/settings')}>{t('Settings')}</button>
         <button onClick={handleLogout}>{t('Logout')}</button>
       </nav>

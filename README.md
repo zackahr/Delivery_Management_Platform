@@ -63,4 +63,3 @@ This repository includes a Makefile with the following targets:
 - **down**: Stops the Docker containers.
 - **restart**: Restarts the Docker containers.
 - **logs**: Fetches logs from the Docker containers.
-"""

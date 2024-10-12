@@ -1,6 +1,3 @@
-# Updating the README content to include information about responsiveness and admin control features.
-
-updated_readme_content = """
 # Delivery Management Platform
 
 This repository contains a comprehensive solution for delivery personnel to manage product commands efficiently. The platform enables users to create commands for the products they sell, including pricing, quantities, and delivery times. It also provides options for modifying or deleting commands and tracks payments to ensure no client runs away without paying.

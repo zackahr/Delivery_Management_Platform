@@ -1,10 +1,13 @@
+# Updating the README content to include information about responsiveness and admin control features.
 
+updated_readme_content = """
 # Delivery Management Platform
 
 This repository contains a comprehensive solution for delivery personnel to manage product commands efficiently. The platform enables users to create commands for the products they sell, including pricing, quantities, and delivery times. It also provides options for modifying or deleting commands and tracks payments to ensure no client runs away without paying.
 
 ## Features
 
+- **Responsive Design**: The application is designed for both phone and laptop, ensuring a seamless user experience across devices.
 - **Command Management**: 
   - Create commands with product prices and quantities.
   - Calculate and display the total price for clients.
@@ -13,6 +16,9 @@ This repository contains a comprehensive solution for delivery personnel to mana
 - **Client Management**:
   - Add clients with an option to select their exact location.
   - List of clients includes the ability to view client locations for better delivery tracking.
+
+- **Admin Control**:
+  - Admins can add new deliveries and control all deliveries through a global settings panel.
 
 - **User Customization**:
   - Users can change their usernames and passwords for security.
@@ -60,3 +66,4 @@ This repository includes a Makefile with the following targets:
 - **down**: Stops the Docker containers.
 - **restart**: Restarts the Docker containers.
 - **logs**: Fetches logs from the Docker containers.
+"""

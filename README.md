@@ -1,50 +1,59 @@
-# Dockerize-MongoDB-NestJs
+# Delivery Management Platform
 
-This repository contains a Docker Compose setup for running MongoDB, Mongo Express, and a Nest.js CRUD application, providing a convenient way to manage MongoDB databases and interact with them using a web-based administrative interface.
+This repository contains a comprehensive solution for delivery personnel to manage product commands efficiently. The platform enables users to create commands for the products they sell, including pricing, quantities, and delivery times. It also provides options for modifying or deleting commands and tracks payments to ensure no client runs away without paying.
 
-## MongoDB Service
+## Features
 
-- **Image**: The MongoDB service uses the official MongoDB image from Docker Hub.
-- **Container Name**: The container running MongoDB is named `mongodb`.
-- **Ports**: MongoDB is accessible on port `27017` of the host machine.
-- **Volumes**: Data stored in MongoDB is persisted using a Docker volume named `mongodb_data`, which is mounted to the `/data/db` directory inside the MongoDB container.
+- **Responsive Design**: The application is designed for both phone and laptop, ensuring a seamless user experience across devices.
+- **Command Management**: 
+  - Create commands with product prices and quantities.
+  - Calculate and display the total price for clients.
+  - Set delivery times for each command.
 
-## Mongo Express Service
+- **Client Management**:
+  - Add clients with an option to select their exact location.
+  - List of clients includes the ability to view client locations for better delivery tracking.
 
-- **Image**: The Mongo Express service uses the `mongo-express` image, which is a web-based administrative interface for MongoDB.
-- **Container Name**: The container running Mongo Express is named `mongo-express`.
-- **Ports**: Mongo Express is accessible on port `8081` of the host machine.
-- **Environment Variables**: Mongo Express is configured to connect to the MongoDB service (`mongodb`) using environment variables. Basic authentication is enabled with the username `admin` and password `password`.
-- **Depends On**: Mongo Express depends on the MongoDB service (`mongodb`), ensuring that MongoDB is started before Mongo Express.
+- **Admin Control**:
+  - Admins can add new deliveries and control all deliveries through a global settings panel.
 
-## Nest.js CRUD Application
+- **User Customization**:
+  - Users can change their usernames and passwords for security.
 
-- **Dockerfile**: The Nest.js application is containerized using a Dockerfile located in the `nest-mongodb` directory.
-- **Container Name**: The container running the Nest.js application is named `nest-mongodb`.
-- **Ports**: The Nest.js application is accessible on port `3000` of the host machine.
-- **Volumes**: The Nest.js application code is mounted from the `./nest-mongodb` directory to the `/app` directory inside the container.
-- **Depends On**: The Nest.js application depends on the MongoDB service (`mongodb`).
+- **Daily Summary**:
+  - Generate daily summaries of all commands and payments.
 
-### CRUD Functionality
+- **Tracking**:
+  - Monitor each client's commands to keep track of payments and outstanding balances.
 
-The Nest.js application provides the following CRUD endpoints for managing data:
+- **Authentication**:
+  - Implemented JSON Web Tokens (JWT) for secure authentication and authorization of users.
 
-- **POST /items**: Create a new item.
-- **GET /items**: Retrieve all items.
-- **GET /items/:id**: Retrieve a specific item by ID.
-- **PATCH /items/:id**: Update a specific item by ID.
-- **DELETE /items/:id**: Delete a specific item by ID.
+## Technology Stack
 
-These endpoints allow you to perform basic CRUD operations on the MongoDB database using the Nest.js application.
+- **Frontend**: React.js for building a responsive user interface.
+- **Backend**: Nest.js for building efficient and scalable server-side applications.
+- **Database**: MongoDB for flexible data storage and management.
+- **Web Server**: Nginx for serving the application over HTTPS.
+- **Hosting**: Digital Ocean for hosting the website.
+- **Containerization**: Docker with Docker Compose to manage application containers.
 
-## MongoDB, Mongo Express, and Nest.js
+## Docker Compose Setup
 
-- **Port Usage**: MongoDB uses port `27017`, which is the default port for MongoDB connections. Mongo Express uses port `8081` to provide a web-based interface for managing MongoDB databases. The Nest.js application uses port `3000`.
-- **Purpose**: MongoDB is a NoSQL database that stores data in a flexible, JSON-like format. It is widely used for various types of applications, including web and mobile applications. Mongo Express is a lightweight administrative interface for MongoDB, allowing users to perform CRUD operations, view database statistics, and manage database users through a web browser. Nest.js is a framework for building efficient, scalable Node.js server-side applications with TypeScript.
+The project includes a Docker Compose setup for managing containers for the application. Ensure you have Docker and Docker Compose installed to run the project locally.
 
-## Accessing MongoDB, Mongo Express, and Nest.js
+## Accessing the Application
 
-- After starting the Docker containers using `docker-compose up`, MongoDB can be accessed using any MongoDB client that supports connection to `localhost:27017`. Mongo Express can be accessed by navigating to `http://localhost:8081` in a web browser. Use the username `admin` and password `password` to log in to Mongo Express. The Nest.js application endpoints can be accessed at `http://localhost:3000/items`.
+After starting the Docker containers, the application can be accessed through a web browser. Please follow these steps to run the application:
+
+1. Clone the repository.
+2. Navigate to the project directory.
+3. Run `docker-compose up` to start the application.
+
+## Note
+
+- Ensure that no other applications are using the same ports specified in the `docker-compose.yml` file to avoid conflicts.
+- Modify environment variables in the `docker-compose.yml` file as necessary for your configuration.
 
 ## Makefile
 
@@ -54,7 +63,3 @@ This repository includes a Makefile with the following targets:
 - **down**: Stops the Docker containers.
 - **restart**: Restarts the Docker containers.
 - **logs**: Fetches logs from the Docker containers.
-
-## Note
-
-- Ensure that no other application is already using ports `27017`, `8081`, and `3000` on your host machine to avoid conflicts when running the containers.
